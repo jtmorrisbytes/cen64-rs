@@ -1,0 +1,6 @@
+C:/Users/jthec/cen64-rs/win-iconv-0.0.10/win-iconv-0.0.10/CMakeFiles/iconv_shared.dir
+C:/Users/jthec/cen64-rs/win-iconv-0.0.10/win-iconv-0.0.10/CMakeFiles/win_iconv.dir
+C:/Users/jthec/cen64-rs/win-iconv-0.0.10/win-iconv-0.0.10/CMakeFiles/iconv_static.dir
+C:/Users/jthec/cen64-rs/win-iconv-0.0.10/win-iconv-0.0.10/CMakeFiles/INSTALL.dir
+C:/Users/jthec/cen64-rs/win-iconv-0.0.10/win-iconv-0.0.10/CMakeFiles/ALL_BUILD.dir
+C:/Users/jthec/cen64-rs/win-iconv-0.0.10/win-iconv-0.0.10/CMakeFiles/ZERO_CHECK.dir

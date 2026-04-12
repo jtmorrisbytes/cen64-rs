@@ -1,0 +1,53 @@
+# freeze_config.cmake
+#
+# Runs CMake's configure_file() in isolation to materialise common.h
+# from common.h.in, then the template can be deleted from the tree.
+#
+# Usage (run once from the repo root, no build directory needed):
+#
+#   cmake -DVR4300_BUSY_WAIT_DETECTION=ON \
+#         -DDEBUG_MMIO_REGISTER_ACCESS=OFF \
+#         -P freeze_config.cmake
+#
+# The -D flags are optional; the defaults below match the CMakeLists defaults.
+# After running, commit common.h and delete common.h.in.
+
+# ---------------------------------------------------------------------------
+# Defaults — mirror the option() defaults in the original CMakeLists.txt:
+#   option(VR4300_BUSY_WAIT_DETECTION ... ON)
+#   option(DEBUG_MMIO_REGISTER_ACCESS ... OFF)
+# ---------------------------------------------------------------------------
+if(NOT DEFINED VR4300_BUSY_WAIT_DETECTION)
+    set(VR4300_BUSY_WAIT_DETECTION ON)
+endif()
+
+if(NOT DEFINED DEBUG_MMIO_REGISTER_ACCESS)
+    set(DEBUG_MMIO_REGISTER_ACCESS OFF)
+endif()
+
+# ---------------------------------------------------------------------------
+# Resolve paths relative to this script's location so it works regardless
+# of the working directory the user invokes cmake from.
+# CMAKE_CURRENT_LIST_DIR is set by cmake -P to the script's directory.
+# ---------------------------------------------------------------------------
+set(INPUT  "${CMAKE_CURRENT_LIST_DIR}/common.h.in")
+set(OUTPUT "${CMAKE_CURRENT_LIST_DIR}/common.h")
+
+if(NOT EXISTS "${INPUT}")
+    message(FATAL_ERROR "Could not find ${INPUT} — run this script from the repo root")
+endif()
+
+# ---------------------------------------------------------------------------
+# configure_file() in script mode (@ONLY so we don't accidentally expand
+# CMake's own ${VAR} syntax inside the C header).
+# ---------------------------------------------------------------------------
+configure_file("${INPUT}" "${OUTPUT}" @ONLY)
+
+message(STATUS "Generated: ${OUTPUT}")
+message(STATUS "  VR4300_BUSY_WAIT_DETECTION = ${VR4300_BUSY_WAIT_DETECTION}")
+message(STATUS "  DEBUG_MMIO_REGISTER_ACCESS = ${DEBUG_MMIO_REGISTER_ACCESS}")
+message(STATUS "")
+message(STATUS "Next steps:")
+message(STATUS "  git add common.h")
+message(STATUS "  git rm common.h.in")
+message(STATUS "  git rm freeze_config.cmake   # delete this script too")

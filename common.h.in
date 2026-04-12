@@ -75,8 +75,10 @@ typedef char bool;
 #define CEN64_COMPILER "Unknown"
 #endif
 
-#cmakedefine CEN64_ARCH_DIR "@CEN64_ARCH_DIR@"
-#cmakedefine CEN64_ARCH_SUPPORT "@CEN64_ARCH_SUPPORT@"
+// #define CEN_64_ARCH_DIR "\"x86_64\""
+// #undef CEN64_ARCH_SUPPORT
+// #cmakedefine CEN64_ARCH_DIR "@CEN64_ARCH_DIR@"
+// #cmakedefine CEN64_ARCH_SUPPORT "@CEN64_ARCH_SUPPORT@"
 
 #define CACHE_LINE_SIZE 64
 
@@ -188,7 +190,8 @@ struct bus_controller;
 void cen64_return(struct bus_controller *bus)
 ;
 
-#cmakedefine DEBUG_MMIO_REGISTER_ACCESS
+#undef DEBUG_MMIO_REGISTER_ACCESS
+// #cmakedefine DEBUG_MMIO_REGISTER_ACCESS
 #ifdef DEBUG_MMIO_REGISTER_ACCESS
 #ifndef __cplusplus
 #include <stdio.h>
@@ -202,8 +205,8 @@ void cen64_return(struct bus_controller *bus)
 #define debug_mmio_write(what, mnemonic, val, dqm) do {} while (0)
 #endif
 
-#cmakedefine VR4300_BUSY_WAIT_DETECTION
-
+// #cmakedefine VR4300_BUSY_WAIT_DETECTION
+#define VR4300_BUSY_WAIT_DETECTION 1
 #include "common/debug.h"
 
 // Common/shared LUT with one-hot semantics.

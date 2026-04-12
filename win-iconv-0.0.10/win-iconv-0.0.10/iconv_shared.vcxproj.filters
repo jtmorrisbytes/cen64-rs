@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\jthec\cen64-rs\win-iconv-0.0.10\win-iconv-0.0.10\win_iconv.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="C:\Users\jthec\cen64-rs\win-iconv-0.0.10\win-iconv-0.0.10\iconv.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\jthec\cen64-rs\win-iconv-0.0.10\win-iconv-0.0.10\localcharset.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\jthec\cen64-rs\win-iconv-0.0.10\win-iconv-0.0.10\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="C:\Users\jthec\cen64-rs\win-iconv-0.0.10\win-iconv-0.0.10\iconv-g.def">
+      <Filter>Source Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{455F9565-05F4-35EA-A58F-3290E847F14B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4A321312-C1AF-35B1-9060-FE966E8166B6}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

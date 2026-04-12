@@ -1,0 +1,10 @@
+^C:\USERS\JTHEC\CEN64-RS\WIN-ICONV-0.0.10\WIN-ICONV-0.0.10\CMAKEFILES\DDEA80048FD02E13721AC17DEBEA2702\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/jthec/cen64-rs/win-iconv-0.0.10/win-iconv-0.0.10 -BC:/Users/jthec/cen64-rs/win-iconv-0.0.10/win-iconv-0.0.10 --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file C:/Users/jthec/cen64-rs/win-iconv-0.0.10/win-iconv-0.0.10/win_iconv.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

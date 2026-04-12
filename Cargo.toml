@@ -1,0 +1,11 @@
+[package]
+name="cen64-rs"
+version="0.1.0"
+edition="2021"
+
+[build-dependencies]
+cc = "1.2.60"
+vcvars = "0.1.6"
+
+[target."cfg(windows)".build-dependencies]
+vcvars = "0.1.6"
