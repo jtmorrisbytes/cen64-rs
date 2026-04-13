@@ -1,0 +1,79 @@
+
+"AMD uProf (Version:5.2.431.0)"
+PERFORMANCE ANALYSIS REPORT
+
+EXECUTION
+Target Path:,"c:\Users\jthec\cen64-rs\target\debug\cen64-rs.exe"
+Command Line Arguments:,"-- 'C:\Users\jthec\Downloads\[BIOS] Nintendo 64 - PIF (Japan, USA)\[BIOS] Nintendo 64 - PIF (Japan, USA).bin' 'C:\Users\jthec\Downloads\Legend of Zelda, The - Ocarina of Time (U) (V1.2) [!]\Legend of Zelda, The - Ocarina of Time (U) (V1.2) [!].z64' "
+Working Directory:,"C:\Users\jthec\cen64-rs"
+Environment Variables:
+CPU Details:,"Family(0x19), Model(0x21), Number of Cores(12)"
+Operating System:,"Win1125H2-64"
+Profile Command:,"AMDuProfCLI.exe profile --config hotspots --detail -o ./profile_results c:\Users\jthec\cen64-rs\target\debug\cen64-rs.exe -- 'C:\Users\jthec\Downloads\[BIOS] Nintendo 64 - PIF (Japan, USA)\[BIOS] Nintendo 64 - PIF (Japan, USA).bin' 'C:\Users\jthec\Downloads\Legend of Zelda, The - Ocarina of Time (U) (V1.2) [!]\Legend of Zelda, The - Ocarina of Time (U) (V1.2) [!].z64'"
+
+PROFILE DETAILS
+Profile Session Type:,"Hotspots"
+Profile Scope:,"Single Application"
+CPU Mask:,"0-11"
+CPU Affinity Mask:,"0-11"
+Profile Start Time:,"Mon Apr 13 18:04:47 2026"
+Profile End Time:,"Mon Apr 13 18:04:47 2026"
+Profile Duration:,"0.587 seconds"
+Data Folder:,"C:\Users\jthec\cen64-rs\profile_results\AMDuProf-cen64-rs-Hotspots_Apr-13-2026_18-04-46"
+Virtual Machine:,"Yes"
+Hypervisor Vendor:,"Microsoft Hyper-V"
+Call Stack Sampling:,"False"
+Selected View:,"Time based hotspots"
+
+MONITORED EVENTS
+TBP Events:,Name,Interval,Description
+,"CPU_TIME","10.000 milliseconds","CPU Time is the time in which the CPU core is executing the code."
+
+
+APPLICATION PERFORMANCE SNAPSHOT
+Number Of Threads,"5"
+
+
+"10 HOTTEST FUNCTIONS (Sort Event - CPU_TIME)"
+FUNCTION,"CPU_TIME" (seconds),Module
+"ntdll.dll!0x180162414",0.0100,"c:\windows\system32\ntdll.dll"
+
+"10 HOTTEST PROCESSES (Sort Event - CPU_TIME)"
+PROCESS,"CPU_TIME" (seconds)
+"c:\users\jthec\cen64-rs\target\debug\cen64-rs.exe (PID:9716)",0.0100
+
+"10 HOTTEST MODULES (Sort Event - CPU_TIME)"
+MODULE,"CPU_TIME" (seconds)
+"c:\windows\system32\ntdll.dll",0.0100
+
+"10 HOTTEST THREADS (Sort Event - CPU_TIME)"
+THREAD,"CPU_TIME" (seconds),THREAD ID
+"Thread-21524 (PID:9716)",0.0100,"21524"
+
+"ALL PROCESSES (Sort Event - CPU_TIME)"
+PROCESS,"CPU_TIME" (seconds)
+"c:\users\jthec\cen64-rs\target\debug\cen64-rs.exe (PID:9716)",0.0100
+
+
+PROFILE REPORT FOR PROCESS - c:\users\jthec\cen64-rs\target\debug\cen64-rs.exe (PID:9716)
+PROCESS,"CPU_TIME" (seconds)
+"c:\users\jthec\cen64-rs\target\debug\cen64-rs.exe (PID:9716)",0.0100
+
+THREAD SUMMARY
+THREAD,"CPU_TIME" (seconds),THREAD ID
+"Thread-21524 (PID:9716)",0.0100,"21524"
+
+
+MODULE SUMMARY
+MODULE,"CPU_TIME" (seconds)
+c:\windows\system32\ntdll.dll,0.0100
+
+
+FUNCTION SUMMARY
+FUNCTION,"CPU_TIME" (seconds),MODULE
+"ntdll.dll!0x180162414",0.0100,c:\windows\system32\ntdll.dll
+
+Function Detail Data
+Function,"CPU_TIME" (seconds)
+"ntdll.dll!0x180162414" (SYSTEM MODULE FUNCTION),0.0100
+

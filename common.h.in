@@ -47,6 +47,26 @@ typedef char bool;
 #define true 1
 #endif
 
+
+// Debugging 'hacks'
+#pragma once
+#include <stdio.h>
+
+// Forward declaration of your Rust function
+extern FILE* rust_fopen_hook(const char* filename, const char* mode);
+
+#ifdef _MSC_VER
+  // Force MSVC to make the symbol visible in the DLL/EXE
+  #define CEN64_EXPORT __declspec(dllexport)
+#else
+  // Other compilers (GCC/Clang) usually export by default
+  #define CEN64_EXPORT
+#endif
+
+
+
+
+
 #ifdef __llvm__
 #define CEN64_COMPILER "llvm-" stringify(__clang_major__)"." \
   stringify(__clang_minor__)"." stringify(__clang_patchlevel__)

@@ -288,6 +288,16 @@ fn main() {
         //            translates "c99" → "-std:c99" which cl.exe rejects with
         //            D9002. We emit the MSVC flag manually instead.
 
+        // include debug symbols
+        b.debug(true);
+        // Rust -> C debugger 'hacks'
+        b.define("fopen", "rust_fopen_hook");
+        if is_msvc {
+            // Use /ALTERNATENAME to redirect the symbol at the linker level
+            println!("cargo:rustc-link-arg=/ALTERNATENAME:fopen=rust_fopen_hook");
+            // b.flag("/Zi").flag("/FS");
+        }
+
         // if build windows, use vcvars to find the msvc paths and everything
 
         if is_msvc {
@@ -366,12 +376,10 @@ fn main() {
                 );
             }
             b.define("CEN64_ARCH_SUPPORT", "\"sse2\"");
-            
+
             b.define("__builtin_trap", "abort");
             b.define("__builtin_bswap64", "_byteswap_uint64");
             b.define("__builtin_unreachable", "__assume(0)");
-
-
         }
 
         // Warnings — mirrors the GCC/Clang flags in CMakeLists

@@ -28,465 +28,645 @@
 #include "thread.h"
 #include <stdlib.h>
 
-cen64_cold static int check_extensions(void);
-cen64_cold static int load_roms(const char *ddipl_path, const char *ddrom_path,
-  const char *pifrom_path, const char *cart_path, struct rom_file *ddipl,
-  const struct dd_variant **dd_variant,
-  struct rom_file *ddrom, struct rom_file *pifrom, struct rom_file *cart);
-cen64_cold static int load_paks(struct controller *controller);
+cen64_cold CEN64_EXPORT int check_extensions(void);
+cen64_cold  CEN64_EXPORT int load_roms(const char *ddipl_path, const char *ddrom_path,
+                                const char *pifrom_path, const char *cart_path, struct rom_file *ddipl,
+                                const struct dd_variant **dd_variant,
+                                struct rom_file *ddrom, struct rom_file *pifrom, struct rom_file *cart);
+cen64_cold  CEN64_EXPORT int load_paks(struct controller *controller);
 cen64_cold static int validate_sha(struct rom_file *rom, const uint8_t *good_sum);
 
-cen64_cold static int run_device(struct cen64_device *device, bool no_video);
+cen64_cold  CEN64_EXPORT int run_device(struct cen64_device *device, bool no_video);
 cen64_cold static CEN64_THREAD_RETURN_TYPE run_device_thread(void *opaque);
-
-// Called when another simulation instance is desired.
-int cen64_main(int argc, const char **argv) {
-  struct controller controller[4] = { { 0, }, };
-	struct cen64_options options = default_cen64_options;
-  options.controller = controller;
-  struct rom_file ddipl, ddrom, pifrom, cart;
-  const struct dd_variant *dd_variant;
-  struct cen64_mem cen64_device_mem;
-  struct cen64_device *device;
-  int status;
-
-  const struct cart_db_entry *cart_info;
-  struct save_file eeprom;
-  struct save_file sram;
-  struct save_file flashram;
-  struct is_viewer is, *is_in = NULL;
-
-#ifdef _WIN32
-  check_start_from_explorer();
-#endif
-
-  if (!cart_db_is_well_formed()) {
-    printf("Internal cart detection database is not well-formed.\n");
-    return EXIT_FAILURE;
-  }
-
-  if (cen64_alloc_init()) {
-    printf("Failed to initialize the low-level allocators.\n");
-    return EXIT_FAILURE;
-  }
-
-  if (check_extensions()) {
-      return EXIT_FAILURE;
-  }
-
-  if (argc < 3) {
-    print_command_line_usage(argv[0]);
-    cen64_alloc_cleanup();
-    return EXIT_SUCCESS;
-  }
-
-  if (parse_options(&options, argc - 1, argv + 1)) {
-    printf("Invalid command line argument(s) specified.\n");
-
-    print_command_line_usage(argv[0]);
-    cen64_alloc_cleanup();
-    return EXIT_FAILURE;
-  }
-
-  memset(&ddipl, 0, sizeof(ddipl));
-  memset(&ddrom, 0, sizeof(ddrom));
-  memset(&cart,  0, sizeof(cart));
-  memset(&eeprom, 0, sizeof(eeprom));
-  memset(&sram,  0, sizeof(sram));
-  memset(&flashram, 0, sizeof(flashram));
-  memset(&is, 0, sizeof(is));
-  dd_variant = NULL;
-
-  if (load_roms(options.ddipl_path, options.ddrom_path, options.pifrom_path,
-    options.cart_path, &ddipl, &dd_variant, &ddrom, &pifrom, &cart)) {
-    cen64_alloc_cleanup();
-    return EXIT_FAILURE;
-  }
-
-  if (cart.size >= 0x40 && (cart_info = cart_db_get_entry(cart.ptr)) != NULL) {
-    printf("Detected cart: %s[%s] - %s\n", cart_info->rom_id, cart_info->regions, cart_info->description);
-
-    enum cart_db_save_type save_type = cart_info->save_type;
-    if (strcmp(cart_info->rom_id,"NK4") == 0) {
-      // Special case for Japanese Kirby 64, which has different save types for different revisions
-      uint8_t* rom = cart.ptr;
-      if(rom[0x3e] == 'J' && rom[0x3f] < 2) save_type = CART_DB_SAVE_TYPE_SRAM_256KBIT;
-    }
-
-    switch (save_type) {
-      case CART_DB_SAVE_TYPE_EEPROM_4KBIT:
-        if (options.eeprom_path == NULL) {
-          printf("Warning: cart saves to 4kbit EEPROM, but none specified (see -eep4k)\n");
-          open_save_file(NULL, 0x200, &eeprom, NULL);
-        } else {
-          if (options.eeprom_size != 0x200)
-             printf("Warning: cart saves to 4kbit EEPROM, but different size specified (see -eep4k)\n");
-        }
-        break;
-      case CART_DB_SAVE_TYPE_EEPROM_16KBIT:
-        if (options.eeprom_path == NULL) {
-          printf("Warning: cart saves to 16kbit EEPROM, but none specified (see -eep16k)\n");
-          open_save_file(NULL, 0x800, &eeprom, NULL);
-        } else {
-          if (options.eeprom_size != 0x800)
-             printf("Warning: cart saves to 16kbit EEPROM, but different size specified (see -eep16k)\n");
-        }
-        break;
-      case CART_DB_SAVE_TYPE_FLASH_1MBIT:
-        if (options.flashram_path == NULL) {
-          int created;
-          printf("Warning: cart saves to Flash, but none specified (see -flash)\n");
-          open_save_file(NULL, FLASHRAM_SIZE, &flashram, &created);
-          if (created) {
-            memset(flashram.ptr, 0xFF, FLASHRAM_SIZE);
-          }
-        }
-        break;
-      case CART_DB_SAVE_TYPE_SRAM_256KBIT:
-        if (options.sram_path == NULL) {
-          printf("Warning: cart saves to 256kbit SRAM, but none specified (see -sram256k)\n");
-          open_save_file(NULL, 0x8000, &sram, NULL);
-        } else if (options.sram_size != 0x8000) {
-          printf("Warning: cart saves to 256kbit SRAM, but different size specified (see -sram256k)\n");
-        }
-        break;
-      case CART_DB_SAVE_TYPE_SRAM_768KBIT:
-        if (options.sram_path == NULL) {
-          printf("Warning: cart saves to 768kbit SRAM, but none specified (see -sram768k)\n");
-          open_save_file(NULL, 0x18000, &sram, NULL);
-        } else if (options.sram_size != 0x18000) {
-          printf("Warning: cart saves to 768kbit SRAM, but different size specified (see -sram768k)\n");
-        }
-        break;
-      case CART_DB_SAVE_TYPE_SRAM_1MBIT:
-        if (options.sram_path == NULL) {
-          printf("Warning: cart saves to 1mbit SRAM, but none specified (see -sram1m)\n");
-          open_save_file(NULL, 0x20000, &sram, NULL);
-        } else if (options.sram_size != 0x20000) {
-          printf("Warning: cart saves to 1mbit SRAM, but different size specified (see -sram1m)\n");
-        }
-        break;
-    }
-  }
-
-  if (load_paks(controller)) {
-    cen64_alloc_cleanup();
-    return EXIT_FAILURE;
-  }
-
-  if (options.eeprom_path != NULL &&
-      open_save_file(options.eeprom_path, options.eeprom_size, &eeprom, NULL)) {
-    cen64_alloc_cleanup();
-    return EXIT_FAILURE;
-  }
-
-  if (options.sram_path != NULL &&
-      open_save_file(options.sram_path, options.sram_size, &sram, NULL)) {
-    cen64_alloc_cleanup();
-    return EXIT_FAILURE;
-  }
-
-  if (options.flashram_path != NULL) {
-    int created;
-    if (open_save_file(options.flashram_path, FLASHRAM_SIZE, &flashram, &created)) {
-      cen64_alloc_cleanup();
-      return EXIT_FAILURE;
-    }
-    if (created)
-      memset(flashram.ptr, 0xFF, FLASHRAM_SIZE);
-  }
-
-  if (!is_viewer_init(&is, options.is_viewer_output)) {
-    cen64_alloc_cleanup();
-    return EXIT_FAILURE;
-  } else {
-    is_in = &is;
-  }
-
-  // Allocate memory for and create the device.
-  if (cen64_alloc(&cen64_device_mem, sizeof(*device), false) == NULL) {
-    printf("Failed to allocate enough memory for a device.\n");
-    status = EXIT_FAILURE;
-  }
-
-  else {
-    device = (struct cen64_device *) cen64_device_mem.ptr;
-
-    if (device_create(device, &ddipl, dd_variant, &ddrom,
-      &pifrom, &cart, &eeprom, &sram,
-      &flashram, is_in, controller,
-      options.no_audio, options.no_video, options.enable_profiling) == NULL) {
-      printf("Failed to create a device.\n");
-      status = EXIT_FAILURE;
-    }
-
-    else {
-      struct gdb* debugger = NULL;
-
-      if (options.debugger_addr) {
-        debugger = gdb_alloc();
-        gdb_init(debugger, device, options.debugger_addr);
-      }
-
-      device->multithread = options.multithread;
-      status = run_device(device, options.no_video);
-      device_destroy(device, options.cart_path);
-
-      if (debugger) {
-        gdb_destroy(debugger);
-      }
-    }
-
-    cen64_free(&cen64_device_mem);
-  }
-
-  // Release resources.
-  if (options.ddipl_path)
-    close_rom_file(&ddipl);
-
-  if (options.ddrom_path)
-    close_rom_file(&ddrom);
-
-  if (options.cart_path)
-    close_rom_file(&cart);
-
-  close_rom_file(&pifrom);
-  cen64_alloc_cleanup();
-  return status;
-}
-
-
-enum cpu_extensions {
-    EXT_NONE = 0, EXT_SSE2, EXT_SSE3, EXT_SSSE3, EXT_SSE41, EXT_AVX
+const struct cart_db_entry *cart_info;
+struct save_file eeprom;
+struct save_file sram;
+struct save_file flashram;
+struct is_viewer is, *is_in = NULL;
+struct cen64_options options;
+struct rom_file ddipl, ddrom, pifrom, cart;
+const struct dd_variant *dd_variant;
+struct cen64_mem cen64_device_mem;
+// extern struct cen64_device *device;
+enum cart_db_save_type save_type;
+struct gdb *debugger;
+struct controller controller[4] = {
+    {
+        0,
+    },
 };
 
-static const char *_cpu_extensions_str(enum cpu_extensions ext) {
-    switch (ext) {
-        case EXT_NONE:
-            return "None";
-        case EXT_SSE2:
-            return "SSE2";
-        case EXT_SSE3:
-            return "SSE3";
-        case EXT_SSSE3:
-            return "SSSE3";
-        case EXT_SSE41:
-            return "SSE4.1";
-        case EXT_AVX:
-            return "AVX";
-    }
-    return "Unknown";
+// // Called when another simulation instance is desired.
+// int cen64_main(int argc, const char **argv)
+// {
+//   options = default_cen64_options;
+//   options.controller = controller;
+//   int status;
+
+
+// #ifdef _WIN32
+//   check_start_from_explorer();
+// #endif
+
+//   if (!cart_db_is_well_formed())
+//   {
+//     printf("Internal cart detection database is not well-formed.\n");
+//     return EXIT_FAILURE;
+//   }
+
+//   if (cen64_alloc_init())
+//   {
+//     printf("Failed to initialize the low-level allocators.\n");
+//     return EXIT_FAILURE;
+//   }
+
+//   if (check_extensions())
+//   {
+//     return EXIT_FAILURE;
+//   }
+
+//   if (argc < 3)
+//   {
+//     print_command_line_usage(argv[0]);
+//     cen64_alloc_cleanup();
+//     return EXIT_SUCCESS;
+//   }
+
+//   if (parse_options(&options, argc - 1, argv + 1))
+//   {
+//     printf("Invalid command line argument(s) specified.\n");
+
+//     print_command_line_usage(argv[0]);
+//     cen64_alloc_cleanup();
+//     return EXIT_FAILURE;
+//   }
+
+//   memset(&ddipl, 0, sizeof(ddipl));
+//   memset(&ddrom, 0, sizeof(ddrom));
+//   memset(&cart, 0, sizeof(cart));
+//   memset(&eeprom, 0, sizeof(eeprom));
+//   memset(&sram, 0, sizeof(sram));
+//   memset(&flashram, 0, sizeof(flashram));
+//   memset(&is, 0, sizeof(is));
+//   dd_variant = NULL;
+
+//   if (load_roms(options.ddipl_path, options.ddrom_path, options.pifrom_path,
+//                 options.cart_path, &ddipl, &dd_variant, &ddrom, &pifrom, &cart))
+//   {
+//     cen64_alloc_cleanup();
+//     return EXIT_FAILURE;
+//   }
+
+//   if (cart.size >= 0x40 && (cart_info = cart_db_get_entry(cart.ptr)) != NULL)
+//   {
+//     printf("Detected cart: %s[%s] - %s\n", cart_info->rom_id, cart_info->regions, cart_info->description);
+
+//     save_type = cart_info->save_type;
+//     if (strcmp(cart_info->rom_id, "NK4") == 0)
+//     {
+//       // Special case for Japanese Kirby 64, which has different save types for different revisions
+//       uint8_t *rom = cart.ptr;
+//       if (rom[0x3e] == 'J' && rom[0x3f] < 2)
+//         save_type = CART_DB_SAVE_TYPE_SRAM_256KBIT;
+//     }
+
+//     switch (save_type)
+//     {
+//     case CART_DB_SAVE_TYPE_EEPROM_4KBIT:
+//       if (options.eeprom_path == NULL)
+//       {
+//         printf("Warning: cart saves to 4kbit EEPROM, but none specified (see -eep4k)\n");
+//         open_save_file(NULL, 0x200, &eeprom, NULL);
+//       }
+//       else
+//       {
+//         if (options.eeprom_size != 0x200)
+//           printf("Warning: cart saves to 4kbit EEPROM, but different size specified (see -eep4k)\n");
+//       }
+//       break;
+//     case CART_DB_SAVE_TYPE_EEPROM_16KBIT:
+//       if (options.eeprom_path == NULL)
+//       {
+//         printf("Warning: cart saves to 16kbit EEPROM, but none specified (see -eep16k)\n");
+//         open_save_file(NULL, 0x800, &eeprom, NULL);
+//       }
+//       else
+//       {
+//         if (options.eeprom_size != 0x800)
+//           printf("Warning: cart saves to 16kbit EEPROM, but different size specified (see -eep16k)\n");
+//       }
+//       break;
+//     case CART_DB_SAVE_TYPE_FLASH_1MBIT:
+//       if (options.flashram_path == NULL)
+//       {
+//         int created;
+//         printf("Warning: cart saves to Flash, but none specified (see -flash)\n");
+//         open_save_file(NULL, FLASHRAM_SIZE, &flashram, &created);
+//         if (created)
+//         {
+//           memset(flashram.ptr, 0xFF, FLASHRAM_SIZE);
+//         }
+//       }
+//       break;
+//     case CART_DB_SAVE_TYPE_SRAM_256KBIT:
+//       if (options.sram_path == NULL)
+//       {
+//         printf("Warning: cart saves to 256kbit SRAM, but none specified (see -sram256k)\n");
+//         open_save_file(NULL, 0x8000, &sram, NULL);
+//       }
+//       else if (options.sram_size != 0x8000)
+//       {
+//         printf("Warning: cart saves to 256kbit SRAM, but different size specified (see -sram256k)\n");
+//       }
+//       break;
+//     case CART_DB_SAVE_TYPE_SRAM_768KBIT:
+//       if (options.sram_path == NULL)
+//       {
+//         printf("Warning: cart saves to 768kbit SRAM, but none specified (see -sram768k)\n");
+//         open_save_file(NULL, 0x18000, &sram, NULL);
+//       }
+//       else if (options.sram_size != 0x18000)
+//       {
+//         printf("Warning: cart saves to 768kbit SRAM, but different size specified (see -sram768k)\n");
+//       }
+//       break;
+//     case CART_DB_SAVE_TYPE_SRAM_1MBIT:
+//       if (options.sram_path == NULL)
+//       {
+//         printf("Warning: cart saves to 1mbit SRAM, but none specified (see -sram1m)\n");
+//         open_save_file(NULL, 0x20000, &sram, NULL);
+//       }
+//       else if (options.sram_size != 0x20000)
+//       {
+//         printf("Warning: cart saves to 1mbit SRAM, but different size specified (see -sram1m)\n");
+//       }
+//       break;
+//     }
+//   }
+
+//   if (load_paks(controller))
+//   {
+//     cen64_alloc_cleanup();
+//     return EXIT_FAILURE;
+//   }
+
+//   if (options.eeprom_path != NULL &&
+//       open_save_file(options.eeprom_path, options.eeprom_size, &eeprom, NULL))
+//   {
+//     cen64_alloc_cleanup();
+//     return EXIT_FAILURE;
+//   }
+
+//   if (options.sram_path != NULL &&
+//       open_save_file(options.sram_path, options.sram_size, &sram, NULL))
+//   {
+//     cen64_alloc_cleanup();
+//     return EXIT_FAILURE;
+//   }
+
+//   if (options.flashram_path != NULL)
+//   {
+//     int created;
+//     if (open_save_file(options.flashram_path, FLASHRAM_SIZE, &flashram, &created))
+//     {
+//       cen64_alloc_cleanup();
+//       return EXIT_FAILURE;
+//     }
+//     if (created)
+//       memset(flashram.ptr, 0xFF, FLASHRAM_SIZE);
+//   }
+
+//   if (!is_viewer_init(&is, options.is_viewer_output))
+//   {
+//     cen64_alloc_cleanup();
+//     return EXIT_FAILURE;
+//   }
+//   else
+//   {
+//     is_in = &is;
+//   }
+
+//   // Allocate memory for and create the device.
+//   if (cen64_alloc(&cen64_device_mem, sizeof(*device), false) == NULL)
+//   {
+//     printf("Failed to allocate enough memory for a device.\n");
+//     status = EXIT_FAILURE;
+//   }
+
+//   else
+//   {
+//     device = (struct cen64_device *)cen64_device_mem.ptr;
+
+//     if (device_create(device, &ddipl, dd_variant, &ddrom,
+//                       &pifrom, &cart, &eeprom, &sram,
+//                       &flashram, is_in, controller,
+//                       options.no_audio, options.no_video, options.enable_profiling) == NULL)
+//     {
+//       printf("Failed to create a device.\n");
+//       status = EXIT_FAILURE;
+//     }
+
+//     else
+//     {
+//        debugger= NULL;
+
+//       if (options.debugger_addr)
+//       {
+//         debugger = gdb_alloc();
+//         gdb_init(debugger, device, options.debugger_addr);
+//       }
+
+//       device->multithread = options.multithread;
+//       status = run_device(device, options.no_video);
+//       device_destroy(device, options.cart_path);
+
+//       if (debugger)
+//       {
+//         gdb_destroy(debugger);
+//       }
+//     }
+
+//     cen64_free(&cen64_device_mem);
+//   }
+
+//   // Release resources.
+//   if (options.ddipl_path)
+//     close_rom_file(&ddipl);
+
+//   if (options.ddrom_path)
+//     close_rom_file(&ddrom);
+
+//   if (options.cart_path)
+//     close_rom_file(&cart);
+
+//   close_rom_file(&pifrom);
+//   cen64_alloc_cleanup();
+//   return status;
+// }
+
+enum cpu_extensions
+{
+  EXT_NONE = 0,
+  EXT_SSE2,
+  EXT_SSE3,
+  EXT_SSSE3,
+  EXT_SSE41,
+  EXT_AVX
+};
+
+static const char *_cpu_extensions_str(enum cpu_extensions ext)
+{
+  switch (ext)
+  {
+  case EXT_NONE:
+    return "None";
+  case EXT_SSE2:
+    return "SSE2";
+  case EXT_SSE3:
+    return "SSE3";
+  case EXT_SSSE3:
+    return "SSSE3";
+  case EXT_SSE41:
+    return "SSE4.1";
+  case EXT_AVX:
+    return "AVX";
+  }
+  return "Unknown";
 }
 
 // check compiled CPU extensions vs what's supported by running CPU
 // returns 0 if the CPU supports the compiled extensions, 1 if not
-int check_extensions(void) {
-    struct cen64_cpuid_t cpuid;
-    enum cpu_extensions max_supported = EXT_NONE, compiled = EXT_NONE;
+CEN64_EXPORT int check_extensions(void)
+{
+  struct cen64_cpuid_t cpuid;
+  enum cpu_extensions max_supported = EXT_NONE, compiled = EXT_NONE;
 
-    // get feature bits
-    cen64_cpuid(1, 0, &cpuid);
+  // get feature bits
+  cen64_cpuid(1, 0, &cpuid);
 
-    if (cpuid.edx & (1 << 26))
-        max_supported = EXT_SSE2;
-    if (cpuid.ecx & (1 << 0))
-        max_supported = EXT_SSE3;
-    if (cpuid.ecx & (1 << 9))
-        max_supported = EXT_SSSE3;
-    if (cpuid.ecx & (1 << 19))
-        max_supported = EXT_SSE41;
-    if (cpuid.ecx & (1 << 28))
-        max_supported = EXT_AVX;
+  if (cpuid.edx & (1 << 26))
+    max_supported = EXT_SSE2;
+  if (cpuid.ecx & (1 << 0))
+    max_supported = EXT_SSE3;
+  if (cpuid.ecx & (1 << 9))
+    max_supported = EXT_SSSE3;
+  if (cpuid.ecx & (1 << 19))
+    max_supported = EXT_SSE41;
+  if (cpuid.ecx & (1 << 28))
+    max_supported = EXT_AVX;
 
 #ifdef __SSE2__
-    compiled = EXT_SSE2;
+  compiled = EXT_SSE2;
 #endif
 #ifdef __SSE3__
-    compiled = EXT_SSE3;
+  compiled = EXT_SSE3;
 #endif
 #ifdef __SSSE3__
-    compiled = EXT_SSSE3;
+  compiled = EXT_SSSE3;
 #endif
 #ifdef __SSE4_1__
-    compiled = EXT_SSE41;
+  compiled = EXT_SSE41;
 #endif
 #ifdef __AVX__
-    compiled = EXT_AVX;
+  compiled = EXT_AVX;
 #endif
 
-    if (compiled > max_supported) {
-        printf("Error: cen64 is compiled with extensions not supported by your CPU.\n");
-        printf("cen64 will not run until you recompile using older extensions.\n");
+  if (compiled > max_supported)
+  {
+    printf("Error: cen64 is compiled with extensions not supported by your CPU.\n");
+    printf("cen64 will not run until you recompile using older extensions.\n");
 
-        printf("\n");
-        printf("cen64 compiled with:  %s\n", _cpu_extensions_str(compiled));
-        printf("Your CPU supports:    %s\n", _cpu_extensions_str(max_supported));
-
-        return 1;
-    }
-
-    if (compiled < max_supported) {
-        printf("Warning: cen64 is not using the fastest extensions supported by your CPU.\n");
-        printf("cen64 will run, but you can get better performance by recompiling.\n");
-        printf("\n");
-        printf("cen64 compiled with:  %s\n", _cpu_extensions_str(compiled));
-        printf("Your CPU supports:    %s\n", _cpu_extensions_str(max_supported));
-    }
-
-    return 0;
-}
-
-// Load any ROM images required for simulation.
-int load_roms(const char *ddipl_path, const char *ddrom_path,
-  const char *pifrom_path, const char *cart_path, struct rom_file *ddipl,
-  const struct dd_variant **dd_variant,
-  struct rom_file *ddrom, struct rom_file *pifrom, struct rom_file *cart) {
-  memset(ddipl, 0, sizeof(*ddipl));
-
-  if (ddipl_path && open_rom_file(ddipl_path, ddipl)) {
-    printf("Failed to load DD IPL ROM: %s.\n", ddipl_path);
+    printf("\n");
+    printf("cen64 compiled with:  %s\n", _cpu_extensions_str(compiled));
+    printf("Your CPU supports:    %s\n", _cpu_extensions_str(max_supported));
 
     return 1;
   }
 
-  *dd_variant = NULL;
-  if (ddipl_path != NULL) {
-    *dd_variant = dd_identify_variant(ddipl);
-    if (*dd_variant != NULL)
-      printf("DD variant: %s\n", (*dd_variant)->description);
+  if (compiled < max_supported)
+  {
+    printf("Warning: cen64 is not using the fastest extensions supported by your CPU.\n");
+    printf("cen64 will run, but you can get better performance by recompiling.\n");
+    printf("\n");
+    printf("cen64 compiled with:  %s\n", _cpu_extensions_str(compiled));
+    printf("Your CPU supports:    %s\n", _cpu_extensions_str(max_supported));
   }
 
-  if (ddrom_path && open_rom_file(ddrom_path, ddrom)) {
+  return 0;
+}
+
+// // Load any ROM images required for simulation.
+// int load_roms(const char *ddipl_path, const char *ddrom_path,
+//               const char *pifrom_path, const char *cart_path, struct rom_file *ddipl,
+//               const struct dd_variant **dd_variant,
+//               struct rom_file *ddrom, struct rom_file *pifrom, struct rom_file *cart)
+// {
+//   memset(ddipl, 0, sizeof(*ddipl));
+
+//   if (ddipl_path && open_rom_file(ddipl_path, ddipl))
+//   {
+//     printf("Failed to load DD IPL ROM: %s.\n", ddipl_path);
+
+//     return 1;
+//   }
+
+//   *dd_variant = NULL;
+//   if (ddipl_path != NULL)
+//   {
+//     *dd_variant = dd_identify_variant(ddipl);
+//     if (*dd_variant != NULL)
+//       printf("DD variant: %s\n", (*dd_variant)->description);
+//   }
+
+//   if (ddrom_path && open_rom_file(ddrom_path, ddrom))
+//   {
+//     printf("Failed to load DD ROM: %s.\n", ddrom_path);
+
+//     if (ddipl_path)
+//       close_rom_file(ddipl);
+
+//     return 2;
+//   }
+
+//   if (open_rom_file(pifrom_path, pifrom))
+//   {
+//     printf("Failed to load PIF ROM: %s.\n", pifrom_path);
+
+//     if (ddipl_path)
+//       close_rom_file(ddipl);
+
+//     if (ddrom_path)
+//       close_rom_file(ddrom);
+
+//     return 3;
+//   }
+
+//   if (validate_sha(pifrom, sha1_pifrom_ntsc))
+//     printf("Using NTSC-U PIFROM\n");
+//   else if (validate_sha(pifrom, sha1_pifrom_ntsc_j))
+//     printf("Using NTSC-J PIFROM\n");
+//   else if (validate_sha(pifrom, sha1_pifrom_pal))
+//     printf("Using PAL PIFROM\n");
+//   else
+//   {
+//     printf("Unknown or corrupted PIFROM: %s.\n", pifrom_path);
+
+// #if 0
+//     if (ddipl_path)
+//       close_rom_file(ddipl);
+
+//     if (ddrom_path)
+//       close_rom_file(ddrom);
+
+//     return 5;
+// #endif
+//   }
+
+//   if (cart_path && open_rom_file(cart_path, cart))
+//   {
+//     printf("Failed to load cart: %s.\n", cart_path);
+
+//     if (ddipl_path)
+//       close_rom_file(ddipl);
+
+//     if (ddrom_path)
+//       close_rom_file(ddrom);
+
+//     close_rom_file(pifrom);
+//     return 4;
+//   }
+
+//   return 0;
+// }
+
+int load_roms(const char *ddipl_path, const char *ddrom_path,
+              const char *pifrom_path, const char *cart_path, 
+              struct rom_file *ddipl_ptr,
+              const struct dd_variant **dd_variant_ptr,
+              struct rom_file *ddrom_ptr, 
+              struct rom_file *pifrom_ptr, 
+              struct rom_file *cart_ptr)
+{
+  // Use the local pointers to zero out/initialize the global structures
+  memset(ddipl_ptr, 0, sizeof(*ddipl_ptr));
+
+  if (ddipl_path && open_rom_file(ddipl_path, ddipl_ptr))
+  {
+    printf("Failed to load DD IPL ROM: %s.\n", ddipl_path);
+    return 1;
+  }
+
+  *dd_variant_ptr = NULL;
+  if (ddipl_path != NULL)
+  {
+    *dd_variant_ptr = dd_identify_variant(ddipl_ptr);
+    if (*dd_variant_ptr != NULL)
+      printf("DD variant: %s\n", (*dd_variant_ptr)->description);
+  }
+
+  if (ddrom_path && open_rom_file(ddrom_path, ddrom_ptr))
+  {
     printf("Failed to load DD ROM: %s.\n", ddrom_path);
 
     if (ddipl_path)
-      close_rom_file(ddipl);
+      close_rom_file(ddipl_ptr);
 
     return 2;
   }
 
-  if (open_rom_file(pifrom_path, pifrom)) {
+  if (open_rom_file(pifrom_path, pifrom_ptr))
+  {
     printf("Failed to load PIF ROM: %s.\n", pifrom_path);
 
     if (ddipl_path)
-      close_rom_file(ddipl);
+      close_rom_file(ddipl_ptr);
 
     if (ddrom_path)
-      close_rom_file(ddrom);
+      close_rom_file(ddrom_ptr);
 
     return 3;
   }
 
-  if (validate_sha(pifrom, sha1_pifrom_ntsc))
+  // SHA validation now points to the memory Rust provided
+  if (validate_sha(pifrom_ptr, sha1_pifrom_ntsc))
     printf("Using NTSC-U PIFROM\n");
-  else if (validate_sha(pifrom, sha1_pifrom_ntsc_j))
+  else if (validate_sha(pifrom_ptr, sha1_pifrom_ntsc_j))
     printf("Using NTSC-J PIFROM\n");
-  else if (validate_sha(pifrom, sha1_pifrom_pal))
+  else if (validate_sha(pifrom_ptr, sha1_pifrom_pal))
     printf("Using PAL PIFROM\n");
-  else {
+  else
+  {
     printf("Unknown or corrupted PIFROM: %s.\n", pifrom_path);
 
 #if 0
     if (ddipl_path)
-      close_rom_file(ddipl);
+      close_rom_file(ddipl_ptr);
 
     if (ddrom_path)
-      close_rom_file(ddrom);
+      close_rom_file(ddrom_ptr);
 
     return 5;
 #endif
   }
 
-  if (cart_path && open_rom_file(cart_path, cart)) {
+  if (cart_path && open_rom_file(cart_path, cart_ptr))
+  {
     printf("Failed to load cart: %s.\n", cart_path);
 
     if (ddipl_path)
-      close_rom_file(ddipl);
+      close_rom_file(ddipl_ptr);
 
     if (ddrom_path)
-      close_rom_file(ddrom);
+      close_rom_file(ddrom_ptr);
 
-    close_rom_file(pifrom);
+    close_rom_file(pifrom_ptr);
     return 4;
   }
 
   return 0;
 }
 
-int load_paks(struct controller *controller) {
+
+
+
+
+
+
+
+
+
+
+
+CEN64_EXPORT cen64_cold int load_paks(struct controller *controller_t)
+{
   int i;
 
-  for (i = 0; i < 4; ++i) {
-    if (controller[i].pak == PAK_MEM && controller[i].mempak_path != NULL) {
+  for (i = 0; i < 4; ++i)
+  {
+    if (controller_t[i].pak == PAK_MEM && controller_t[i].mempak_path != NULL)
+    {
       int created = 0;
-      if (open_save_file(controller[i].mempak_path, MEMPAK_SIZE, &controller[i].mempak_save, &created) != 0) {
-        printf("Can't open mempak file %s\n", controller[i].mempak_path);
+      if (open_save_file(controller_t[i].mempak_path, MEMPAK_SIZE, &controller_t[i].mempak_save, &created) != 0)
+      {
+        printf("Can't open mempak file %s\n", controller_t[i].mempak_path);
         return -1;
       }
       if (created)
-        controller_pak_format(controller[i].mempak_save.ptr);
+        controller_pak_format(controller_t[i].mempak_save.ptr);
     }
 
-    else if (controller[i].pak == PAK_TRANSFER) {
-      if (controller[i].tpak_rom_path != NULL) {
-        if (open_rom_file(controller[i].tpak_rom_path,
-              &controller[i].tpak_rom)) {
+    else if (controller_t[i].pak == PAK_TRANSFER)
+    {
+      if (controller_t[i].tpak_rom_path != NULL)
+      {
+        if (open_rom_file(controller_t[i].tpak_rom_path,
+                          &controller_t[i].tpak_rom))
+        {
           printf("Can't open transfer pak ROM\n");
           return -1;
         }
-      } else {
+      }
+      else
+      {
         printf("No ROM supplied for transfer pak.\n");
         printf("The game will run but probably won't do anything interest\n");
       }
-      if (controller[i].tpak_save_path != NULL) {
-        if (open_gb_save(controller[i].tpak_save_path,
-              &controller[i].tpak_save)) {
+      if (controller_t[i].tpak_save_path != NULL)
+      {
+        if (open_gb_save(controller_t[i].tpak_save_path,
+                         &controller_t[i].tpak_save))
+        {
           printf("Can't open transfer pak save\n");
           return -1;
         }
-      } else {
+      }
+      else
+      {
         printf("No save supplied for transfer pak. Just FYI.\n");
       }
 
-      gb_init(&controller[i]);
+      gb_init(&controller_t[i]);
     }
   }
   return 0;
 }
 
-int validate_sha(struct rom_file *rom, const uint8_t *good_sum) {
+int validate_sha(struct rom_file *rom, const uint8_t *good_sum)
+{
   uint8_t sha1_calc[20];
   sha1(rom->ptr, rom->size, sha1_calc);
   return memcmp(sha1_calc, good_sum, SHA1_SIZE) == 0;
 }
 
 // Spins the device until an exit request is received.
-int run_device(struct cen64_device *device, bool no_video) {
+int run_device(struct cen64_device *device_t, bool no_video)
+{
   cen64_thread thread;
 
-  device->running = true;
+  device_t->running = true;
 
-  if (cen64_thread_create(&thread, run_device_thread, device)) {
+  if (cen64_thread_create(&thread, run_device_thread, device_t))
+  {
     printf("Failed to create the main emulation thread.\n");
-    device_destroy(device, NULL);
+    device_destroy(device_t, NULL);
     return 1;
   }
 
   cen64_thread_setname(&thread, "device");
 
   if (!no_video)
-    cen64_gl_window_thread(device);
+    cen64_gl_window_thread(device_t);
 
-  device->running = false;
+  device_t->running = false;
   cen64_thread_join(&thread);
   return 0;
 }
 
-CEN64_THREAD_RETURN_TYPE run_device_thread(void *opaque) {
+CEN64_THREAD_RETURN_TYPE run_device_thread(void *opaque)
+{
   cen64_thread_setname(NULL, "device");
-  struct cen64_device *device = (struct cen64_device *) opaque;
+  struct cen64_device *device_t = (struct cen64_device *)opaque;
 
-  device_run(device);
+  device_run(device_t);
   return CEN64_THREAD_RETURN_VAL;
 }
-

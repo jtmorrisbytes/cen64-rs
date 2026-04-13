@@ -20,7 +20,7 @@ struct cen64_mem {
 cen64_cold void cen64_alloc_cleanup(void);
 cen64_cold int cen64_alloc_init(void);
 
-cen64_cold void *cen64_alloc(struct cen64_mem *m, size_t size, bool exec);
+cen64_cold extern void *cen64_alloc(struct cen64_mem *m, size_t size, bool exec);
 cen64_cold void cen64_free(struct cen64_mem *m);
 
 #endif

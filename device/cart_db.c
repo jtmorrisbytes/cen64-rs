@@ -63,6 +63,7 @@ static const struct cart_db_entry cart_db_table[] = {
   {"NDR", "J",        CART_DB_SAVE_TYPE_EEPROM_4KBIT,  "Doraemon: Nobita to 3tsu no Seireiseki"},
   {"NDU", "EP",       CART_DB_SAVE_TYPE_EEPROM_4KBIT,  "Duck Dodgers"},
   {"NDY", "EJP",      CART_DB_SAVE_TYPE_EEPROM_4KBIT,  "Diddy Kong Racing"},
+  
   {"NEA", "EP",       CART_DB_SAVE_TYPE_EEPROM_4KBIT,  "PGA European Tour"},
   {"NEP", "EJP",      CART_DB_SAVE_TYPE_EEPROM_16KBIT, "Star Wars Episode I: Racer"},
   {"NER", "E",        CART_DB_SAVE_TYPE_EEPROM_4KBIT,  "AeroFighters Assault (USA)"},

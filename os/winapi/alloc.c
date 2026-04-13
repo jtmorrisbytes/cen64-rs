@@ -14,7 +14,7 @@
 #include <windows.h>
 
 // Allocates a block of (R/W/X) memory.
-void *cen64_alloc(struct cen64_mem *m, size_t size, bool exec) {
+void *cen64_alloc_original(struct cen64_mem *m, size_t size, bool exec) {
   int access = exec ? PAGE_EXECUTE_READWRITE : PAGE_READWRITE;
 
   if ((m->ptr = VirtualAlloc(NULL, size,

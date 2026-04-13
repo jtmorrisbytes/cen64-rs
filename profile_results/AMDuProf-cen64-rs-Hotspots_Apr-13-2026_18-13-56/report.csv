@@ -1,0 +1,357 @@
+
+"AMD uProf (Version:5.2.431.0)"
+PERFORMANCE ANALYSIS REPORT
+
+EXECUTION
+Target Path:,"c:\Users\jthec\cen64-rs\target\debug\cen64-rs.exe"
+Command Line Arguments:,"-- C:\Users\jthec\Downloads\pif\pif.bin C:\Users\jthec\Downloads\tloz\tloz.z64 "
+Working Directory:,"C:\Users\jthec\cen64-rs"
+Environment Variables:
+CPU Details:,"Family(0x19), Model(0x21), Number of Cores(12)"
+Operating System:,"Win1125H2-64"
+Profile Command:,"AMDuProfCLI.exe profile --config hotspots --detail -o ./profile_results c:\Users\jthec\cen64-rs\target\debug\cen64-rs.exe -- C:\Users\jthec\Downloads\pif\pif.bin C:\Users\jthec\Downloads\tloz\tloz.z64"
+
+PROFILE DETAILS
+Profile Session Type:,"Hotspots"
+Profile Scope:,"Single Application"
+CPU Mask:,"0-11"
+CPU Affinity Mask:,"0-11"
+Profile Start Time:,"Mon Apr 13 18:13:57 2026"
+Profile End Time:,"Mon Apr 13 18:15:09 2026"
+Profile Duration:,"72.639 seconds"
+Data Folder:,"C:\Users\jthec\cen64-rs\profile_results\AMDuProf-cen64-rs-Hotspots_Apr-13-2026_18-13-56"
+Virtual Machine:,"Yes"
+Hypervisor Vendor:,"Microsoft Hyper-V"
+Call Stack Sampling:,"False"
+Selected View:,"Time based hotspots"
+
+MONITORED EVENTS
+TBP Events:,Name,Interval,Description
+,"CPU_TIME","10.000 milliseconds","CPU Time is the time in which the CPU core is executing the code."
+
+
+APPLICATION PERFORMANCE SNAPSHOT
+Number Of Threads,"26"
+
+
+"10 HOTTEST FUNCTIONS (Sort Event - CPU_TIME)"
+FUNCTION,"CPU_TIME" (seconds),Module
+"static void combiner_2cycle(int, unsigned int *, int *)",4.7200,"c:\users\jthec\cen64-rs\target\debug\cen64-rs.exe"
+"vr4300_cycle",3.5400,"c:\users\jthec\cen64-rs\target\debug\cen64-rs.exe"
+"static int vr4300_dc_stage(struct vr4300 *)",2.5500,"c:\users\jthec\cen64-rs\target\debug\cen64-rs.exe"
+"static int device_spin(struct cen64_device *)",2.5400,"c:\users\jthec\cen64-rs\target\debug\cen64-rs.exe"
+"vi_cycle",2.4000,"c:\users\jthec\cen64-rs\target\debug\cen64-rs.exe"
+"static int blender_2cycle(unsigned int *, unsigned int *, unsigned int *, int, unsigned int, unsigned int, unsigned int, unsigned int, int)",2.3400,"c:\users\jthec\cen64-rs\target\debug\cen64-rs.exe"
+"static void texture_pipeline_cycle(struct COLOR *, struct COLOR *, int, int, unsigned int, unsigned int)",2.2000,"c:\users\jthec\cen64-rs\target\debug\cen64-rs.exe"
+"static int vr4300_ex_stage(struct vr4300 *)",2.0100,"c:\users\jthec\cen64-rs\target\debug\cen64-rs.exe"
+"static void ai_cycle(struct ai_controller *)",1.8800,"c:\users\jthec\cen64-rs\target\debug\cen64-rs.exe"
+"static void fetch_texel_entlut_quadro(struct COLOR *, struct COLOR *, struct COLOR *, struct COLOR *, int, int, int, int, unsigned int)",1.8600,"c:\users\jthec\cen64-rs\target\debug\cen64-rs.exe"
+
+"10 HOTTEST PROCESSES (Sort Event - CPU_TIME)"
+PROCESS,"CPU_TIME" (seconds)
+"c:\users\jthec\cen64-rs\target\debug\cen64-rs.exe (PID:21540)",65.7200
+
+"10 HOTTEST MODULES (Sort Event - CPU_TIME)"
+MODULE,"CPU_TIME" (seconds)
+"c:\users\jthec\cen64-rs\target\debug\cen64-rs.exe",64.4100
+"c:\windows\system32\vcruntime140.dll",0.6000
+"c:\windows\system32\wrap_oal.dll",0.2000
+"c:\windows\system32\driverstore\filerepository\nv_dispig.inf_amd64_0afec3f2050014a0\nvoglv64.dll",0.1700
+"c:\windows\system32\dsound.dll",0.1300
+"c:\windows\system32\ntdll.dll",0.0900
+"c:\windows\system32\resampledmo.dll",0.0600
+"c:\windows\system32\ucrtbase.dll",0.0200
+"c:\windows\system32\winmm.dll",0.0200
+"c:\windows\system32\imagehlp.dll",0.0100
+
+"10 HOTTEST THREADS (Sort Event - CPU_TIME)"
+THREAD,"CPU_TIME" (seconds),THREAD ID
+"Thread-21396 (PID:21540)",65.0400,"21396"
+"Thread-6244 (PID:21540)",0.3800,"6244"
+"Thread-14780 (PID:21540)",0.2400,"14780"
+"Thread-21376 (PID:21540)",0.0600,"21376"
+
+"ALL PROCESSES (Sort Event - CPU_TIME)"
+PROCESS,"CPU_TIME" (seconds)
+"c:\users\jthec\cen64-rs\target\debug\cen64-rs.exe (PID:21540)",65.7200
+
+
+PROFILE REPORT FOR PROCESS - c:\users\jthec\cen64-rs\target\debug\cen64-rs.exe (PID:21540)
+PROCESS,"CPU_TIME" (seconds)
+"c:\users\jthec\cen64-rs\target\debug\cen64-rs.exe (PID:21540)",65.7200
+
+THREAD SUMMARY
+THREAD,"CPU_TIME" (seconds),THREAD ID
+"Thread-21396 (PID:21540)",65.0400,"21396"
+"Thread-6244 (PID:21540)",0.3800,"6244"
+"Thread-14780 (PID:21540)",0.2400,"14780"
+"Thread-21376 (PID:21540)",0.0600,"21376"
+
+
+MODULE SUMMARY
+MODULE,"CPU_TIME" (seconds)
+c:\users\jthec\cen64-rs\target\debug\cen64-rs.exe,64.4100
+c:\windows\system32\vcruntime140.dll,0.6000
+c:\windows\system32\wrap_oal.dll,0.2000
+c:\windows\system32\driverstore\filerepository\nv_dispig.inf_amd64_0afec3f2050014a0\nvoglv64.dll,0.1700
+c:\windows\system32\dsound.dll,0.1300
+c:\windows\system32\ntdll.dll,0.0900
+c:\windows\system32\resampledmo.dll,0.0600
+c:\windows\system32\ucrtbase.dll,0.0200
+c:\windows\system32\winmm.dll,0.0200
+c:\windows\system32\imagehlp.dll,0.0100
+
+
+FUNCTION SUMMARY
+FUNCTION,"CPU_TIME" (seconds),MODULE
+"static void combiner_2cycle(int, unsigned int *, int *)",4.7200,c:\users\jthec\cen64-rs\target\debug\cen64-rs.exe
+"vr4300_cycle",3.5400,c:\users\jthec\cen64-rs\target\debug\cen64-rs.exe
+"static int vr4300_dc_stage(struct vr4300 *)",2.5500,c:\users\jthec\cen64-rs\target\debug\cen64-rs.exe
+"static int device_spin(struct cen64_device *)",2.5400,c:\users\jthec\cen64-rs\target\debug\cen64-rs.exe
+"vi_cycle",2.4000,c:\users\jthec\cen64-rs\target\debug\cen64-rs.exe
+"static int blender_2cycle(unsigned int *, unsigned int *, unsigned int *, int, unsigned int, unsigned int, unsigned int, unsigned int, int)",2.3400,c:\users\jthec\cen64-rs\target\debug\cen64-rs.exe
+"static void texture_pipeline_cycle(struct COLOR *, struct COLOR *, int, int, unsigned int, unsigned int)",2.2000,c:\users\jthec\cen64-rs\target\debug\cen64-rs.exe
+"static int vr4300_ex_stage(struct vr4300 *)",2.0100,c:\users\jthec\cen64-rs\target\debug\cen64-rs.exe
+"static void ai_cycle(struct ai_controller *)",1.8800,c:\users\jthec\cen64-rs\target\debug\cen64-rs.exe
+"static void fetch_texel_entlut_quadro(struct COLOR *, struct COLOR *, struct COLOR *, struct COLOR *, int, int, int, int, unsigned int)",1.8600,c:\users\jthec\cen64-rs\target\debug\cen64-rs.exe
+
+Function Detail Data
+Function,File,Line,SourceCode,"CPU_TIME" (seconds)
+"static void combiner_2cycle(int, unsigned int *, int *)",,,,4.7200
+,C:\Users\jthec\cen64-rs\rdp\n64video.c,1431,"{",0.0200
+,,1435,"	if (combiner_rgbmul_r[0] != &zero_color)",0.0200
+,,1437,"		combined_color.r = color_combiner_equation(*combiner_rgbsub_a_r[0],*combiner_rgbsub_b_r[0],*combiner_rgbmul_r[0],*combiner_rgbadd_r[0]);",0.0500
+,,1439,"		combined_color.b = color_combiner_equation(*combiner_rgbsub_a_b[0],*combiner_rgbsub_b_b[0],*combiner_rgbmul_b[0],*combiner_rgbadd_b[0]);",0.0400
+,,1449,"		combined_color.a = alpha_combiner_equation(*combiner_alphasub_a[0],*combiner_alphasub_b[0],*combiner_alphamul[0],*combiner_alphaadd[0]);",0.0400
+,,1478,"		int32_t preacalpha = special_9bit_clamptable[combined_color.a];",0.0200
+,,1479,"		if (preacalpha == 0xff)",0.0200
+,,1511,"	combined_color.r >>= 8;",0.0100
+,,1513,"	combined_color.b >>= 8;",0.0100
+,,1516,"	texel0_color = texel1_color;",1.1800
+,,1517,"	texel1_color = nexttexel_color;",2.1000
+,,1521,"	if (other_modes.key_en)",0.5100
+,,1529,"	if (combiner_rgbmul_r[1] != &zero_color)",0.0500
+,,1531,"		combined_color.r = color_combiner_equation(*combiner_rgbsub_a_r[1],*combiner_rgbsub_b_r[1],*combiner_rgbmul_r[1],*combiner_rgbadd_r[1]);",0.0200
+,,1537,"		combined_color.r = ((special_9bit_exttable[*combiner_rgbadd_r[1]] << 8) + 0x80) & 0x1ffff;",0.2200
+,,1538,"		combined_color.g = ((special_9bit_exttable[*combiner_rgbadd_g[1]] << 8) + 0x80) & 0x1ffff;",0.0300
+,,1539,"		combined_color.b = ((special_9bit_exttable[*combiner_rgbadd_b[1]] << 8) + 0x80) & 0x1ffff;",0.0500
+,,1543,"		combined_color.a = alpha_combiner_equation(*combiner_alphasub_a[1],*combiner_alphasub_b[1],*combiner_alphamul[1],*combiner_alphaadd[1]);",0.0100
+,,1545,"		combined_color.a = special_9bit_exttable[*combiner_alphaadd[1]] & 0x1ff;",0.0200
+,,1550,"		combined_color.r >>= 8;",0.0200
+,,1551,"		combined_color.g >>= 8;",0.0300
+,,1552,"		combined_color.b >>= 8;",0.0100
+,,1554,"		pixel_color.r = special_9bit_clamptable[combined_color.r];",0.0300
+,,1555,"		pixel_color.g = special_9bit_clamptable[combined_color.g];",0.0100
+,,1556,"		pixel_color.b = special_9bit_clamptable[combined_color.b];",0.0400
+,,1589,"	pixel_color.a = special_9bit_clamptable[combined_color.a];",0.0300
+,,1590,"	if (pixel_color.a == 0xff)",0.0800
+,,1607,"		}",0.0200
+,,1623,"	if (shade_color.a & 0x100)",0.0100
+,,1625,"}",0.0200
+
+Function,File,Line,SourceCode,"CPU_TIME" (seconds)
+"vr4300_cycle",,,,3.5400
+,C:\Users\jthec\cen64-rs\vr4300\cpu.c,27,"void vr4300_cycle(struct vr4300 *vr4300) {",0.1300
+,,28,"  struct vr4300_pipeline *pipeline = &vr4300->pipeline;",0.5000
+,,31,"  vr4300->regs[VR4300_CP0_REGISTER_COUNT]++;",0.6500
+,,34,"  if (pipeline->cycles_to_stall > 0)",0.7000
+,,35,"    pipeline->cycles_to_stall--;",0.1700
+,,38,"    vr4300_cycle_(vr4300);",0.3400
+,,40,"  if ((vr4300->regs[VR4300_CP0_REGISTER_COUNT] & 1) == 1 &&",1.0300
+,,45,"}",0.0200
+
+Function,File,Line,SourceCode,"CPU_TIME" (seconds)
+"static int vr4300_dc_stage(struct vr4300 *)",,,,2.5500
+,C:\Users\jthec\cen64-rs\vr4300\pipeline.c,201,"static int vr4300_dc_stage(struct vr4300 *vr4300) {",0.0500
+,,202,"  struct vr4300_exdc_latch *exdc_latch = &vr4300->pipeline.exdc_latch;",0.1000
+,,203,"  struct vr4300_dcwb_latch *dcwb_latch = &vr4300->pipeline.dcwb_latch;",0.0100
+,,205,"  uint32_t cp0_status = vr4300->regs[VR4300_CP0_REGISTER_STATUS];",0.0200
+,,206,"  uint32_t cp0_cause = vr4300->regs[VR4300_CP0_REGISTER_CAUSE];",0.0100
+,,207,"  const struct segment *segment = exdc_latch->segment;",0.0200
+,,210,"  dcwb_latch->common = exdc_latch->common;",0.0200
+,,211,"  dcwb_latch->result = exdc_latch->result;",0.8600
+,,212,"  dcwb_latch->dest = exdc_latch->dest;",0.0500
+,,217,"  if (unlikely(vr4300->signals & VR4300_SIGNAL_COLDRESET)) {",0.0800
+,,223,"  if (unlikely(cp0_cause & cp0_status & 0xFF00 &&",0.0400
+,,230,"  if (exdc_latch->request.type != VR4300_BUS_REQUEST_NONE) {",0.0800
+,,231,"    struct vr4300_bus_request *request = &exdc_latch->request;",0.0600
+,,232,"    uint64_t vaddr = exdc_latch->request.vaddr;",0.0200
+,,236,"    if ((vaddr - segment->start) >= segment->length) {",0.1000
+,,246,"    paddr = vaddr - segment->offset;",0.0300
+,,247,"    cached = segment->cached;",0.0100
+,,249,"    if (segment->mapped) {",0.0500
+,,273,"    if (unlikely((paddr & ~0x80000007U) == (vr4300->regs[",0.0400
+,,290,"      line = vr4300_dcache_probe(&vr4300->dcache, vaddr, paddr);",0.0300
+,,292,"      if (cached) {",0.0200
+,,293,"        bool last_cache_was_store = dcwb_latch->last_op_was_cache_store;",0.0100
+,,294,"        dcwb_latch->last_op_was_cache_store = (exdc_latch->request.type ==",0.1800
+,,297,"        if (!line) {",0.0100
+,,301,"          if (vr4300->profile_samples) {",0.0100
+,,310,"          return 1;",0.0100
+,,314,"        if (last_cache_was_store) {",0.0700
+,,315,"          VR4300_DCB(vr4300);",0.0400
+,,337,"      paddr &= 0x8;",0.0100
+,,341,"      memcpy(&dword, line->data + paddr, sizeof(dword));",0.0400
+,,343,"      shiftamt = (s_paddr ^ (WORD_ADDR_XOR << 3)) & request->access_type;",0.0500
+,,344,"      rshiftamt = (8 - request->size) << 3;",0.0200
+,,347,"      wdqm = request->wdqm << shiftamt;",0.0800
+,,348,"      wtemp = (request->data << shiftamt) & wdqm;",0.0800
+,,349,"      rtemp = ((int64_t) (dword << lshiftamt)",0.0200
+,,352,"      dword = (dword & ~wdqm) | wtemp;",0.0800
+,,353,"      dcwb_latch->result |= rtemp << request->postshift;",0.0100
+,,354,"      memcpy(line->data + paddr, &dword, sizeof(dword));",0.0300
+,,361,"      line->metadata |= exdc_latch->request.type;",0.0200
+,,376,"  return 0;",0.0100
+,,377,"}",0.0700
+
+Function,File,Line,SourceCode,"CPU_TIME" (seconds)
+"static int device_spin(struct cen64_device *)",,,,2.5400
+,C:\Users\jthec\cen64-rs\device\device.c,301,"  while (likely(device->running)) {",0.3200
+,,304,"    for (i = 0; i < 2; i++) {",1.1000
+,,305,"      vr4300_cycle(device->vr4300);",0.2100
+,,306,"      rsp_cycle(&device->rsp);",0.2100
+,,307,"      ai_cycle(&device->ai);",0.2800
+,,308,"      pi_cycle(&device->pi);",0.0500
+,,309,"      vi_cycle(&device->vi);",0.1100
+,,311,"    }",0.0400
+,,313,"    vr4300_cycle(device->vr4300);",0.2200
+
+Function,File,Line,SourceCode,"CPU_TIME" (seconds)
+"vi_cycle",,,,2.4000
+,C:\Users\jthec\cen64-rs\vi\controller.c,63,"void vi_cycle(struct vi_controller *vi) {",0.1800
+,,68,"  struct render_area *ra = &vi->render_area;",0.3100
+,,72,"  counter = --(vi->counter);",0.6500
+,,75,"  if (unlikely(counter == 0))",0.7300
+,,80,"  if (unlikely(counter == vi->intr_counter))",0.2300
+,,88,"  if (likely(counter != VI_BLANKING_DONE))",0.1000
+,,89,"    return;",0.1000
+,,150,"}",0.1000
+
+Function,File,Line,SourceCode,"CPU_TIME" (seconds)
+"static int blender_2cycle(unsigned int *, unsigned int *, unsigned int *, int, unsigned int, unsigned int, unsigned int, unsigned int, int)",,,,2.3400
+,C:\Users\jthec\cen64-rs\rdp\n64video.c,1949,"{",0.0600
+,,1953,"	if (alpha_compare(acalpha))",0.0600
+,,1955,"		if (other_modes.antialias_en ? (curpixel_cvg) : (curpixel_cvbit))",0.0400
+,,1958,"			inv_pixel_color.a =  (~(*blender1b_a[0])) & 0xff;",0.0600
+,,1963,"			memory_color = pre_memory_color;",1.3100
+,,1965,"			blended_pixel_color.r = r;",0.3400
+,,1966,"			blended_pixel_color.g = g;",0.0100
+,,1970,"			if (!other_modes.color_on_cvg || prewrap)",0.0300
+,,1972,"				dontblend = (other_modes.f.partialreject_2cycle && pixel_color.a >= 0xff);",0.1000
+,,1973,"				if (!blend_en || dontblend)",0.0300
+,,1981,"					inv_pixel_color.a =  (~(*blender1b_a[1])) & 0xff;",0.0400
+,,1994,"			*fr = r;",0.0100
+,,1995,"			*fg = g;",0.0200
+,,1996,"			*fb = b;",0.0600
+,,2001,"			memory_color = pre_memory_color;",0.0600
+,,2007,"		memory_color = pre_memory_color;",0.0800
+,,2008,"		return 0;",0.0100
+,,2010,"}",0.0200
+
+Function,File,Line,SourceCode,"CPU_TIME" (seconds)
+"static void texture_pipeline_cycle(struct COLOR *, struct COLOR *, int, int, unsigned int, unsigned int)",,,,2.2000
+,C:\Users\jthec\cen64-rs\rdp\n64video.c,3877,"{",0.0600
+,,3888,"	int upper = 0;",0.0100
+,,3889,"	int bilerp = cycle ? other_modes.bi_lerp1 : other_modes.bi_lerp0;",0.1600
+,,3890,"	int convert = other_modes.convert_one && cycle;",0.1500
+,,3894,"	sss1 = SSS;",0.0100
+,,3895,"	sst1 = SST;",0.0100
+,,3897,"	tcshift_cycle(&sss1, &sst1, &maxs, &maxt, tilenum);",0.0300
+,,3899,"	sss1 = TRELATIVE(sss1, tile[tilenum].sl);",0.0700
+,,3900,"	sst1 = TRELATIVE(sst1, tile[tilenum].tl);",0.1400
+,,3905,"		tfrac = sst1 & 0x1f;",0.0200
+,,3907,"		tcclamp_cycle(&sss1, &sst1, &sfrac, &tfrac, maxs, maxt, tilenum);",0.0700
+,,3910,"		if (tile[tilenum].format != FORMAT_YUV)",0.1000
+,,3911,"			sss2 = sss1 + 1;",0.0200
+,,3918,"		sst2 = sst1 + 1;",0.0500
+,,3922,"		tcmask_coupled(&sss1, &sss2, &sst1, &sst2, tilenum);",0.0400
+,,3932,"		if (bilerp)",0.0100
+,,3936,"				fetch_texel_quadro(&t0, &t1, &t2, &t3, sss1, sss2, sst1, sst2, tilenum);",0.1100
+,,3938,"				fetch_texel_entlut_quadro(&t0, &t1, &t2, &t3, sss1, sss2, sst1, sst2, tilenum);",0.0500
+,,3943,"				if (!convert)",0.0300
+,,3945,"					if (UPPER)",0.0100
+,,3948,"						invsf = 0x20 - sfrac;",0.0200
+,,3950,"						TEX->r = t3.r + ((((invsf * (t2.r - t3.r)) + (invtf * (t1.r - t3.r))) + 0x10) >> 5);	",0.1500
+,,3951,"						TEX->g = t3.g + ((((invsf * (t2.g - t3.g)) + (invtf * (t1.g - t3.g))) + 0x10) >> 5);																		",0.0700
+,,3952,"						TEX->b = t3.b + ((((invsf * (t2.b - t3.b)) + (invtf * (t1.b - t3.b))) + 0x10) >> 5);																",0.0800
+,,3953,"						TEX->a = t3.a + ((((invsf * (t2.a - t3.a)) + (invtf * (t1.a - t3.a))) + 0x10) >> 5);",0.0600
+,,3957,"						TEX->r = t0.r + ((((sfrac * (t1.r - t0.r)) + (tfrac * (t2.r - t0.r))) + 0x10) >> 5);											",0.0800
+,,3958,"						TEX->g = t0.g + ((((sfrac * (t1.g - t0.g)) + (tfrac * (t2.g - t0.g))) + 0x10) >> 5);											",0.0600
+,,3959,"						TEX->b = t0.b + ((((sfrac * (t1.b - t0.b)) + (tfrac * (t2.b - t0.b))) + 0x10) >> 5);									",0.1000
+,,3960,"						TEX->a = t0.a + ((((sfrac * (t1.a - t0.a)) + (tfrac * (t2.a - t0.a))) + 0x10) >> 5);",0.0700
+,,4020,"		TEX->r &= 0x1ff;",0.0600
+,,4021,"		TEX->g &= 0x1ff;",0.0600
+,,4022,"		TEX->b &= 0x1ff;",0.0900
+,,4023,"		TEX->a &= 0x1ff;",0.0500
+,,4026,"	}",0.0100
+,,4074,"}",0.0900
+
+Function,File,Line,SourceCode,"CPU_TIME" (seconds)
+"static int vr4300_ex_stage(struct vr4300 *)",,,,2.0100
+,C:\Users\jthec\cen64-rs\vr4300\pipeline.c,122,"static int vr4300_ex_stage(struct vr4300 *vr4300) {",0.0300
+,,123,"  const struct vr4300_rfex_latch *rfex_latch = &vr4300->pipeline.rfex_latch;",0.1100
+,,124,"  const struct vr4300_dcwb_latch *dcwb_latch = &vr4300->pipeline.dcwb_latch;",0.0100
+,,125,"  struct vr4300_exdc_latch *exdc_latch = &vr4300->pipeline.exdc_latch;",0.0300
+,,126,"  uint32_t cp0_status = vr4300->regs[VR4300_CP0_REGISTER_STATUS];",0.0400
+,,132,"  exdc_latch->common = rfex_latch->common;",0.0300
+,,133,"  flags = rfex_latch->opcode.flags;",0.8300
+,,134,"  iw = rfex_latch->iw;",0.0100
+,,136,"  rs = GET_RS(iw);",0.0700
+,,137,"  rt = GET_RT(iw);",0.0300
+,,156,"    rt |= (rtlutidx << 5);",0.0100
+,,164,"  if (unlikely(exdc_latch->request.type == VR4300_BUS_REQUEST_READ && (",0.0600
+,,173,"  temp = vr4300->regs[dcwb_latch->dest];",0.1400
+,,174,"  vr4300->regs[dcwb_latch->dest] = dcwb_latch->result;",0.0400
+,,175,"  vr4300->regs[VR4300_REGISTER_R0] = 0x0000000000000000ULL;",0.1600
+,,177,"  rs_reg = vr4300->regs[rs];",0.1200
+,,178,"  rt_reg = vr4300->regs[rt];",0.0400
+,,180,"  vr4300->regs[dcwb_latch->dest] = temp;",0.0300
+,,188,"  if (vr4300->profile_samples) {",0.0900
+,,195,"  exdc_latch->request.type = VR4300_BUS_REQUEST_NONE;",0.0100
+,,196,"  return vr4300_function_table[rfex_latch->opcode.id](",0.0700
+,,198,"}",0.0500
+
+Function,File,Line,SourceCode,"CPU_TIME" (seconds)
+"static void ai_cycle(struct ai_controller *)",,,,1.8800
+,C:\Users\jthec\cen64-rs\ai\controller.h,50,"cen64_flatten cen64_hot static inline void ai_cycle(struct ai_controller *ai) {",0.0900
+,,51,"  if (unlikely(ai->counter-- == 0))",1.6500
+,,53,"}",0.1400
+
+Function,File,Line,SourceCode,"CPU_TIME" (seconds)
+"static void fetch_texel_entlut_quadro(struct COLOR *, struct COLOR *, struct COLOR *, struct COLOR *, int, int, int, int, unsigned int)",,,,1.8600
+,C:\Users\jthec\cen64-rs\rdp\n64video.c,3280,"{",0.0700
+,,3281,"	uint32_t tbase0 = tile[tilenum].line * (t0 & 0xff) + tile[tilenum].tmem;",0.1200
+,,3282,"	uint32_t tbase2 = tile[tilenum].line * (t1 & 0xff) + tile[tilenum].tmem;",0.0400
+,,3283,"	uint32_t tpal	= tile[tilenum].palette << 4;",0.0200
+,,3287,"	uint32_t taddr0 = 0, taddr1 = 0, taddr2 = 0, taddr3 = 0;",0.0200
+,,3292,"	switch(tile[tilenum].f.tlutswitch)",0.3000
+,,3363,"			taddr2 = ((tbase2 << 3) + s0);",0.0300
+,,3365,"			xort = (t0 & 1) ? BYTE_XOR_DWORD_SWAP : BYTE_ADDR_XOR;",0.0600
+,,3366,"			taddr0 ^= xort;",0.0100
+,,3367,"			taddr1 ^= xort;",0.0200
+,,3368,"			xort = (t1 & 1) ? BYTE_XOR_DWORD_SWAP : BYTE_ADDR_XOR;",0.0300
+,,3369,"			taddr2 ^= xort;",0.0100
+,,3370,"			taddr3 ^= xort;",0.0300
+,,3373,"			c0 = tlut[(c0 << 2) ^ WORD_ADDR_XOR];",0.1200
+,,3375,"			c2 = tlut[(c2 << 2) ^ WORD_ADDR_XOR];",0.1500
+,,3376,"			c1 = TMEM[taddr1 & 0x7ff];",0.0100
+,,3377,"			c1 = tlut[(c1 << 2) ^ WORD_ADDR_XOR];",0.0800
+,,3378,"			c3 = TMEM[taddr3 & 0x7ff];",0.0400
+,,3379,"			c3 = tlut[(c3 << 2) ^ WORD_ADDR_XOR];",0.0800
+,,3485,"		color0->r = GET_HI_RGBA16_TMEM(c0);",0.0900
+,,3486,"		color0->g = GET_MED_RGBA16_TMEM(c0);",0.0400
+,,3487,"		color0->b = GET_LOW_RGBA16_TMEM(c0);",0.0400
+,,3488,"		color0->a = (c0 & 1) ? 0xff : 0;",0.0100
+,,3489,"		color1->r = GET_HI_RGBA16_TMEM(c1);",0.0500
+,,3490,"		color1->g = GET_MED_RGBA16_TMEM(c1);",0.0100
+,,3492,"		color1->a = (c1 & 1) ? 0xff : 0;",0.0300
+,,3493,"		color2->r = GET_HI_RGBA16_TMEM(c2);",0.0200
+,,3494,"		color2->g = GET_MED_RGBA16_TMEM(c2);",0.0700
+,,3495,"		color2->b = GET_LOW_RGBA16_TMEM(c2);",0.0100
+,,3496,"		color2->a = (c2 & 1) ? 0xff : 0;",0.0200
+,,3497,"		color3->r = GET_HI_RGBA16_TMEM(c3);",0.0600
+,,3498,"		color3->g = GET_MED_RGBA16_TMEM(c3);",0.0700
+,,3499,"		color3->b = GET_LOW_RGBA16_TMEM(c3);",0.0600
+,,3500,"		color3->a = (c3 & 1) ? 0xff : 0;",0.0300
+,,3513,"}",0.0100
+

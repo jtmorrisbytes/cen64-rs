@@ -1,0 +1,308 @@
+
+"AMD uProf (Version:5.2.431.0)"
+PERFORMANCE ANALYSIS REPORT
+
+EXECUTION
+Target Path:,"c:\Users\jthec\cen64-rs\target\debug\cen64-rs.exe"
+Command Line Arguments:,"-- C:\Users\jthec\Downloads\pif\pif.bin C:\Users\jthec\Downloads\tloz\tloz.z64 "
+Working Directory:,"C:\Users\jthec\cen64-rs"
+Environment Variables:
+CPU Details:,"Family(0x19), Model(0x21), Number of Cores(12)"
+Operating System:,"Win1125H2-64"
+Profile Command:,"AMDuProfCLI.exe profile --config hotspots --detail -o ./profile_results c:\Users\jthec\cen64-rs\target\debug\cen64-rs.exe -- C:\Users\jthec\Downloads\pif\pif.bin C:\Users\jthec\Downloads\tloz\tloz.z64"
+
+PROFILE DETAILS
+Profile Session Type:,"Hotspots"
+Profile Scope:,"Single Application"
+CPU Mask:,"0-11"
+CPU Affinity Mask:,"0-11"
+Profile Start Time:,"Mon Apr 13 18:09:44 2026"
+Profile End Time:,"Mon Apr 13 18:11:31 2026"
+Profile Duration:,"107.206 seconds"
+Data Folder:,"C:\Users\jthec\cen64-rs\profile_results\AMDuProf-cen64-rs-Hotspots_Apr-13-2026_18-09-43"
+Virtual Machine:,"Yes"
+Hypervisor Vendor:,"Microsoft Hyper-V"
+Call Stack Sampling:,"False"
+Selected View:,"Time based hotspots"
+
+MONITORED EVENTS
+TBP Events:,Name,Interval,Description
+,"CPU_TIME","10.000 milliseconds","CPU Time is the time in which the CPU core is executing the code."
+
+
+APPLICATION PERFORMANCE SNAPSHOT
+Number Of Threads,"26"
+
+
+"10 HOTTEST FUNCTIONS (Sort Event - CPU_TIME)"
+FUNCTION,"CPU_TIME" (seconds),Module
+"vr4300_cycle",7.0200,"c:\users\jthec\cen64-rs\target\debug\cen64-rs.exe"
+"static void combiner_2cycle(int, unsigned int *, int *)",6.3200,"c:\users\jthec\cen64-rs\target\debug\cen64-rs.exe"
+"vi_cycle",4.5700,"c:\users\jthec\cen64-rs\target\debug\cen64-rs.exe"
+"static int device_spin(struct cen64_device *)",4.1300,"c:\users\jthec\cen64-rs\target\debug\cen64-rs.exe"
+"static int vr4300_dc_stage(struct vr4300 *)",4.0600,"c:\users\jthec\cen64-rs\target\debug\cen64-rs.exe"
+"vr4300_cycle_",3.9700,"c:\users\jthec\cen64-rs\target\debug\cen64-rs.exe"
+"static int vr4300_ex_stage(struct vr4300 *)",3.5100,"c:\users\jthec\cen64-rs\target\debug\cen64-rs.exe"
+"static void ai_cycle(struct ai_controller *)",3.4400,"c:\users\jthec\cen64-rs\target\debug\cen64-rs.exe"
+"static void pi_cycle(struct pi_controller *)",2.8500,"c:\users\jthec\cen64-rs\target\debug\cen64-rs.exe"
+"static void vr4300_cycle_busywait(struct vr4300 *)",2.7700,"c:\users\jthec\cen64-rs\target\debug\cen64-rs.exe"
+
+"10 HOTTEST PROCESSES (Sort Event - CPU_TIME)"
+PROCESS,"CPU_TIME" (seconds)
+"c:\users\jthec\cen64-rs\target\debug\cen64-rs.exe (PID:18444)",97.6500
+
+"10 HOTTEST MODULES (Sort Event - CPU_TIME)"
+MODULE,"CPU_TIME" (seconds)
+"c:\users\jthec\cen64-rs\target\debug\cen64-rs.exe",95.6500
+"c:\windows\system32\vcruntime140.dll",1.0000
+"c:\windows\system32\driverstore\filerepository\nv_dispig.inf_amd64_0afec3f2050014a0\nvoglv64.dll",0.2500
+"c:\windows\system32\wrap_oal.dll",0.2400
+"c:\windows\system32\ntdll.dll",0.1700
+"c:\windows\system32\resampledmo.dll",0.1400
+"c:\windows\system32\dsound.dll",0.0900
+"c:\windows\system32\ucrtbase.dll",0.0200
+"c:\windows\system32\kernelbase.dll",0.0200
+"c:\windows\system32\win32u.dll",0.0200
+
+"10 HOTTEST THREADS (Sort Event - CPU_TIME)"
+THREAD,"CPU_TIME" (seconds),THREAD ID
+"Thread-6340 (PID:18444)",96.6900,"6340"
+"Thread-7744 (PID:18444)",0.4100,"7744"
+"Thread-19352 (PID:18444)",0.3600,"19352"
+"Thread-9620 (PID:18444)",0.1600,"9620"
+"Thread-16820 (PID:18444)",0.0200,"16820"
+"Thread-13896 (PID:18444)",0.0100,"13896"
+
+"ALL PROCESSES (Sort Event - CPU_TIME)"
+PROCESS,"CPU_TIME" (seconds)
+"c:\users\jthec\cen64-rs\target\debug\cen64-rs.exe (PID:18444)",97.6500
+
+
+PROFILE REPORT FOR PROCESS - c:\users\jthec\cen64-rs\target\debug\cen64-rs.exe (PID:18444)
+PROCESS,"CPU_TIME" (seconds)
+"c:\users\jthec\cen64-rs\target\debug\cen64-rs.exe (PID:18444)",97.6500
+
+THREAD SUMMARY
+THREAD,"CPU_TIME" (seconds),THREAD ID
+"Thread-6340 (PID:18444)",96.6900,"6340"
+"Thread-7744 (PID:18444)",0.4100,"7744"
+"Thread-19352 (PID:18444)",0.3600,"19352"
+"Thread-9620 (PID:18444)",0.1600,"9620"
+"Thread-16820 (PID:18444)",0.0200,"16820"
+"Thread-13896 (PID:18444)",0.0100,"13896"
+
+
+MODULE SUMMARY
+MODULE,"CPU_TIME" (seconds)
+c:\users\jthec\cen64-rs\target\debug\cen64-rs.exe,95.6500
+c:\windows\system32\vcruntime140.dll,1.0000
+c:\windows\system32\driverstore\filerepository\nv_dispig.inf_amd64_0afec3f2050014a0\nvoglv64.dll,0.2500
+c:\windows\system32\wrap_oal.dll,0.2400
+c:\windows\system32\ntdll.dll,0.1700
+c:\windows\system32\resampledmo.dll,0.1400
+c:\windows\system32\dsound.dll,0.0900
+c:\windows\system32\ucrtbase.dll,0.0200
+c:\windows\system32\kernelbase.dll,0.0200
+c:\windows\system32\win32u.dll,0.0200
+
+
+FUNCTION SUMMARY
+FUNCTION,"CPU_TIME" (seconds),MODULE
+"vr4300_cycle",7.0200,c:\users\jthec\cen64-rs\target\debug\cen64-rs.exe
+"static void combiner_2cycle(int, unsigned int *, int *)",6.3200,c:\users\jthec\cen64-rs\target\debug\cen64-rs.exe
+"vi_cycle",4.5700,c:\users\jthec\cen64-rs\target\debug\cen64-rs.exe
+"static int device_spin(struct cen64_device *)",4.1300,c:\users\jthec\cen64-rs\target\debug\cen64-rs.exe
+"static int vr4300_dc_stage(struct vr4300 *)",4.0600,c:\users\jthec\cen64-rs\target\debug\cen64-rs.exe
+"vr4300_cycle_",3.9700,c:\users\jthec\cen64-rs\target\debug\cen64-rs.exe
+"static int vr4300_ex_stage(struct vr4300 *)",3.5100,c:\users\jthec\cen64-rs\target\debug\cen64-rs.exe
+"static void ai_cycle(struct ai_controller *)",3.4400,c:\users\jthec\cen64-rs\target\debug\cen64-rs.exe
+"static void pi_cycle(struct pi_controller *)",2.8500,c:\users\jthec\cen64-rs\target\debug\cen64-rs.exe
+"static void vr4300_cycle_busywait(struct vr4300 *)",2.7700,c:\users\jthec\cen64-rs\target\debug\cen64-rs.exe
+
+Function Detail Data
+Function,File,Line,SourceCode,"CPU_TIME" (seconds)
+"vr4300_cycle",,,,7.0200
+,C:\Users\jthec\cen64-rs\vr4300\cpu.c,27,"void vr4300_cycle(struct vr4300 *vr4300) {",0.2800
+,,28,"  struct vr4300_pipeline *pipeline = &vr4300->pipeline;",0.9400
+,,31,"  vr4300->regs[VR4300_CP0_REGISTER_COUNT]++;",1.6600
+,,34,"  if (pipeline->cycles_to_stall > 0)",1.0800
+,,35,"    pipeline->cycles_to_stall--;",0.2600
+,,38,"    vr4300_cycle_(vr4300);",0.6400
+,,40,"  if ((vr4300->regs[VR4300_CP0_REGISTER_COUNT] & 1) == 1 &&",2.0000
+,,45,"}",0.1600
+
+Function,File,Line,SourceCode,"CPU_TIME" (seconds)
+"static void combiner_2cycle(int, unsigned int *, int *)",,,,6.3200
+,C:\Users\jthec\cen64-rs\rdp\n64video.c,1431,"{",0.0200
+,,1435,"	if (combiner_rgbmul_r[0] != &zero_color)",0.0300
+,,1437,"		combined_color.r = color_combiner_equation(*combiner_rgbsub_a_r[0],*combiner_rgbsub_b_r[0],*combiner_rgbmul_r[0],*combiner_rgbadd_r[0]);",0.0500
+,,1438,"		combined_color.g = color_combiner_equation(*combiner_rgbsub_a_g[0],*combiner_rgbsub_b_g[0],*combiner_rgbmul_g[0],*combiner_rgbadd_g[0]);",0.0400
+,,1439,"		combined_color.b = color_combiner_equation(*combiner_rgbsub_a_b[0],*combiner_rgbsub_b_b[0],*combiner_rgbmul_b[0],*combiner_rgbadd_b[0]);",0.1100
+,,1444,"		combined_color.g = ((special_9bit_exttable[*combiner_rgbadd_g[0]] << 8) + 0x80) & 0x1ffff;",0.0100
+,,1445,"		combined_color.b = ((special_9bit_exttable[*combiner_rgbadd_b[0]] << 8) + 0x80) & 0x1ffff;",0.0100
+,,1448,"	if (combiner_alphamul[0] != &zero_color)",0.0200
+,,1451,"		combined_color.a = special_9bit_exttable[*combiner_alphaadd[0]] & 0x1ff;",0.0200
+,,1478,"		int32_t preacalpha = special_9bit_clamptable[combined_color.a];",0.0100
+,,1511,"	combined_color.r >>= 8;",0.0200
+,,1512,"	combined_color.g >>= 8;",0.0100
+,,1513,"	combined_color.b >>= 8;",0.0200
+,,1516,"	texel0_color = texel1_color;",1.8300
+,,1517,"	texel1_color = nexttexel_color;",2.6700
+,,1521,"	if (other_modes.key_en)",0.5900
+,,1529,"	if (combiner_rgbmul_r[1] != &zero_color)",0.1600
+,,1531,"		combined_color.r = color_combiner_equation(*combiner_rgbsub_a_r[1],*combiner_rgbsub_b_r[1],*combiner_rgbmul_r[1],*combiner_rgbadd_r[1]);",0.0300
+,,1532,"		combined_color.g = color_combiner_equation(*combiner_rgbsub_a_g[1],*combiner_rgbsub_b_g[1],*combiner_rgbmul_g[1],*combiner_rgbadd_g[1]);",0.0100
+,,1537,"		combined_color.r = ((special_9bit_exttable[*combiner_rgbadd_r[1]] << 8) + 0x80) & 0x1ffff;",0.1200
+,,1538,"		combined_color.g = ((special_9bit_exttable[*combiner_rgbadd_g[1]] << 8) + 0x80) & 0x1ffff;",0.0700
+,,1539,"		combined_color.b = ((special_9bit_exttable[*combiner_rgbadd_b[1]] << 8) + 0x80) & 0x1ffff;",0.0300
+,,1542,"	if (combiner_alphamul[1] != &zero_color)",0.0100
+,,1543,"		combined_color.a = alpha_combiner_equation(*combiner_alphasub_a[1],*combiner_alphasub_b[1],*combiner_alphamul[1],*combiner_alphaadd[1]);",0.0100
+,,1545,"		combined_color.a = special_9bit_exttable[*combiner_alphaadd[1]] & 0x1ff;",0.0800
+,,1552,"		combined_color.b >>= 8;",0.0300
+,,1554,"		pixel_color.r = special_9bit_clamptable[combined_color.r];",0.0600
+,,1555,"		pixel_color.g = special_9bit_clamptable[combined_color.g];",0.0400
+,,1556,"		pixel_color.b = special_9bit_clamptable[combined_color.b];",0.0500
+,,1557,"	}",0.0100
+,,1589,"	pixel_color.a = special_9bit_clamptable[combined_color.a];",0.0200
+,,1590,"	if (pixel_color.a == 0xff)",0.0700
+,,1604,"			pixel_color.a += adseed;",0.0200
+,,1607,"		}",0.0200
+,,1622,"	shade_color.a += adseed;",0.0100
+,,1623,"	if (shade_color.a & 0x100)",0.0100
+
+Function,File,Line,SourceCode,"CPU_TIME" (seconds)
+"vi_cycle",,,,4.5700
+,C:\Users\jthec\cen64-rs\vi\controller.c,63,"void vi_cycle(struct vi_controller *vi) {",0.2800
+,,68,"  struct render_area *ra = &vi->render_area;",0.5200
+,,72,"  counter = --(vi->counter);",1.4400
+,,75,"  if (unlikely(counter == 0))",1.3900
+,,80,"  if (unlikely(counter == vi->intr_counter))",0.4200
+,,88,"  if (likely(counter != VI_BLANKING_DONE))",0.2100
+,,89,"    return;",0.1700
+,,150,"}",0.1400
+
+Function,File,Line,SourceCode,"CPU_TIME" (seconds)
+"static int device_spin(struct cen64_device *)",,,,4.1300
+,C:\Users\jthec\cen64-rs\device\device.c,301,"  while (likely(device->running)) {",0.5800
+,,304,"    for (i = 0; i < 2; i++) {",1.8300
+,,305,"      vr4300_cycle(device->vr4300);",0.4300
+,,306,"      rsp_cycle(&device->rsp);",0.3100
+,,307,"      ai_cycle(&device->ai);",0.3700
+,,308,"      pi_cycle(&device->pi);",0.1100
+,,309,"      vi_cycle(&device->vi);",0.1500
+,,311,"    }",0.0500
+,,313,"    vr4300_cycle(device->vr4300);",0.3000
+
+Function,File,Line,SourceCode,"CPU_TIME" (seconds)
+"static int vr4300_dc_stage(struct vr4300 *)",,,,4.0600
+,C:\Users\jthec\cen64-rs\vr4300\pipeline.c,201,"static int vr4300_dc_stage(struct vr4300 *vr4300) {",0.1200
+,,202,"  struct vr4300_exdc_latch *exdc_latch = &vr4300->pipeline.exdc_latch;",0.1200
+,,203,"  struct vr4300_dcwb_latch *dcwb_latch = &vr4300->pipeline.dcwb_latch;",0.0300
+,,205,"  uint32_t cp0_status = vr4300->regs[VR4300_CP0_REGISTER_STATUS];",0.1200
+,,206,"  uint32_t cp0_cause = vr4300->regs[VR4300_CP0_REGISTER_CAUSE];",0.0300
+,,207,"  const struct segment *segment = exdc_latch->segment;",0.0100
+,,210,"  dcwb_latch->common = exdc_latch->common;",0.0800
+,,211,"  dcwb_latch->result = exdc_latch->result;",1.4300
+,,212,"  dcwb_latch->dest = exdc_latch->dest;",0.1000
+,,217,"  if (unlikely(vr4300->signals & VR4300_SIGNAL_COLDRESET)) {",0.0800
+,,223,"  if (unlikely(cp0_cause & cp0_status & 0xFF00 &&",0.0400
+,,230,"  if (exdc_latch->request.type != VR4300_BUS_REQUEST_NONE) {",0.0900
+,,231,"    struct vr4300_bus_request *request = &exdc_latch->request;",0.1000
+,,232,"    uint64_t vaddr = exdc_latch->request.vaddr;",0.0200
+,,236,"    if ((vaddr - segment->start) >= segment->length) {",0.2300
+,,246,"    paddr = vaddr - segment->offset;",0.0500
+,,247,"    cached = segment->cached;",0.0100
+,,249,"    if (segment->mapped) {",0.0700
+,,273,"    if (unlikely((paddr & ~0x80000007U) == (vr4300->regs[",0.0800
+,,285,"    if (likely(exdc_latch->request.type < VR4300_BUS_REQUEST_CACHE)) {",0.0100
+,,290,"      line = vr4300_dcache_probe(&vr4300->dcache, vaddr, paddr);",0.0100
+,,292,"      if (cached) {",0.0500
+,,293,"        bool last_cache_was_store = dcwb_latch->last_op_was_cache_store;",0.0500
+,,294,"        dcwb_latch->last_op_was_cache_store = (exdc_latch->request.type ==",0.1300
+,,297,"        if (!line) {",0.0300
+,,301,"          if (vr4300->profile_samples) {",0.0400
+,,310,"          return 1;",0.0100
+,,314,"        if (last_cache_was_store) {",0.0800
+,,315,"          VR4300_DCB(vr4300);",0.0500
+,,316,"          return 1;",0.0200
+,,323,"        request->paddr = paddr;",0.0100
+,,336,"      s_paddr = paddr << 3;",0.0500
+,,341,"      memcpy(&dword, line->data + paddr, sizeof(dword));",0.0600
+,,343,"      shiftamt = (s_paddr ^ (WORD_ADDR_XOR << 3)) & request->access_type;",0.0800
+,,344,"      rshiftamt = (8 - request->size) << 3;",0.1000
+,,345,"      lshiftamt = (s_paddr & (0x7 << 3));",0.0100
+,,347,"      wdqm = request->wdqm << shiftamt;",0.0500
+,,348,"      wtemp = (request->data << shiftamt) & wdqm;",0.0600
+,,349,"      rtemp = ((int64_t) (dword << lshiftamt)",0.0200
+,,352,"      dword = (dword & ~wdqm) | wtemp;",0.1700
+,,353,"      dcwb_latch->result |= rtemp << request->postshift;",0.0100
+,,354,"      memcpy(line->data + paddr, &dword, sizeof(dword));",0.0300
+,,361,"      line->metadata |= exdc_latch->request.type;",0.0500
+,,377,"}",0.0700
+
+Function,File,Line,SourceCode,"CPU_TIME" (seconds)
+"vr4300_cycle_",,,,3.9700
+,C:\Users\jthec\cen64-rs\vr4300\pipeline.c,512,"void vr4300_cycle_(struct vr4300 *vr4300) {",0.2600
+,,513,"  struct vr4300_pipeline *pipeline = &vr4300->pipeline;",0.7600
+,,518,"  if (pipeline->fault_present + vr4300->regs[PIPELINE_CYCLE_TYPE])",1.1800
+,,519,"    pipeline_function_lut[vr4300->regs[PIPELINE_CYCLE_TYPE]](vr4300);",1.0800
+,,522,"    if (vr4300_wb_stage(vr4300))",0.0200
+,,525,"    vr4300_debug_check_breakpoints(&vr4300->debug, vr4300_get_pc(vr4300));",0.1900
+,,527,"    if (vr4300_dc_stage(vr4300))",0.1300
+,,530,"    if (vr4300_ex_stage(vr4300))",0.0800
+,,533,"    if (vr4300_rf_stage(vr4300))",0.0300
+,,536,"    vr4300_ic_stage(vr4300);",0.0100
+,,538,"}",0.2300
+
+Function,File,Line,SourceCode,"CPU_TIME" (seconds)
+"static int vr4300_ex_stage(struct vr4300 *)",,,,3.5100
+,C:\Users\jthec\cen64-rs\vr4300\pipeline.c,122,"static int vr4300_ex_stage(struct vr4300 *vr4300) {",0.1400
+,,123,"  const struct vr4300_rfex_latch *rfex_latch = &vr4300->pipeline.rfex_latch;",0.1000
+,,124,"  const struct vr4300_dcwb_latch *dcwb_latch = &vr4300->pipeline.dcwb_latch;",0.0300
+,,125,"  struct vr4300_exdc_latch *exdc_latch = &vr4300->pipeline.exdc_latch;",0.0900
+,,126,"  uint32_t cp0_status = vr4300->regs[VR4300_CP0_REGISTER_STATUS];",0.0600
+,,132,"  exdc_latch->common = rfex_latch->common;",0.1300
+,,133,"  flags = rfex_latch->opcode.flags;",1.1600
+,,134,"  iw = rfex_latch->iw;",0.0400
+,,136,"  rs = GET_RS(iw);",0.0700
+,,137,"  rt = GET_RT(iw);",0.0500
+,,139,"  if (flags & OPCODE_INFO_FPU) {",0.0300
+,,144,"    if (unlikely(!(cp0_status & 0x20000000U))) {",0.0200
+,,152,"    rtlutidx = flags & 0x2;",0.0100
+,,153,"    rslutidx = flags & 0x1;",0.0100
+,,155,"    rs = (iw >> fpu_select_lut[rslutidx] & 0x1F) | (rslutidx << 6);",0.0400
+,,156,"    rt |= (rtlutidx << 5);",0.0100
+,,158,"    rs &= ~((rslutidx) & fr);",0.0400
+,,159,"    rt &= ~((rtlutidx >> 1) & fr);",0.0100
+,,164,"  if (unlikely(exdc_latch->request.type == VR4300_BUS_REQUEST_READ && (",0.1600
+,,173,"  temp = vr4300->regs[dcwb_latch->dest];",0.2100
+,,174,"  vr4300->regs[dcwb_latch->dest] = dcwb_latch->result;",0.1000
+,,175,"  vr4300->regs[VR4300_REGISTER_R0] = 0x0000000000000000ULL;",0.1900
+,,177,"  rs_reg = vr4300->regs[rs];",0.2300
+,,178,"  rt_reg = vr4300->regs[rt];",0.0800
+,,180,"  vr4300->regs[dcwb_latch->dest] = temp;",0.0600
+,,188,"  if (vr4300->profile_samples) {",0.2000
+,,194,"  exdc_latch->dest = VR4300_REGISTER_R0;",0.0100
+,,195,"  exdc_latch->request.type = VR4300_BUS_REQUEST_NONE;",0.0200
+,,196,"  return vr4300_function_table[rfex_latch->opcode.id](",0.1800
+,,198,"}",0.0300
+
+Function,File,Line,SourceCode,"CPU_TIME" (seconds)
+"static void ai_cycle(struct ai_controller *)",,,,3.4400
+,C:\Users\jthec\cen64-rs\ai\controller.h,50,"cen64_flatten cen64_hot static inline void ai_cycle(struct ai_controller *ai) {",0.3400
+,,51,"  if (unlikely(ai->counter-- == 0))",2.8600
+,,53,"}",0.2400
+
+Function,File,Line,SourceCode,"CPU_TIME" (seconds)
+"static void pi_cycle(struct pi_controller *)",,,,2.8500
+,C:\Users\jthec\cen64-rs\pi\controller.h,82,"cen64_flatten cen64_hot static inline void pi_cycle(struct pi_controller *pi) {",0.3900
+,,83,"  if (unlikely(pi->counter-- == 0))",2.2300
+,,85,"}",0.2300
+
+Function,File,Line,SourceCode,"CPU_TIME" (seconds)
+"static void vr4300_cycle_busywait(struct vr4300 *)",,,,2.7700
+,C:\Users\jthec\cen64-rs\vr4300\pipeline.c,485,"void vr4300_cycle_busywait(struct vr4300 *vr4300) {",1.2500
+,,486,"  uint32_t cp0_status = vr4300->regs[VR4300_CP0_REGISTER_STATUS];",0.5000
+,,487,"  uint32_t cp0_cause = vr4300->regs[VR4300_CP0_REGISTER_CAUSE];",0.3100
+,,491,"    && (cp0_status & 0x1) && !(cp0_status & 0x6)) {",0.7100
+

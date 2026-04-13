@@ -1,0 +1,398 @@
+{
+    "auxiliary": {
+        "availablePages": "32872 MB",
+        "availableRam": "33255 MB",
+        "availableVirtualMemory": "134213421 MB",
+        "cores": 12,
+        "cpuAgentCount": 0,
+        "cpuFamily": 25,
+        "cpuModel": 33,
+        "cpuModelName": "AMD Ryzen 5 5600X 6-Core Processor",
+        "cpuTopology": [
+            [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                1,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                2,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                3,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                4,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                5,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                6,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                7,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                8,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                9,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                10,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                11,
+                0,
+                0,
+                0,
+                0
+            ]
+        ],
+        "eventColumnIds": [
+            {
+                "category": 1,
+                "categoryName": "CPU PROFILE",
+                "events": [
+                    {
+                        "callstack": true,
+                        "category": 1,
+                        "cmask": 0,
+                        "description": "CPU Time is the time in which the CPU core is executing the code.",
+                        "encodedId": 562949953478656,
+                        "eventCategory": 2,
+                        "expression": "",
+                        "fetchL3MissOnly": false,
+                        "frequency": 0,
+                        "hwEventId": 57344,
+                        "interval": 10,
+                        "invCmask": false,
+                        "isFrequencyMode": false,
+                        "isRawEvent": true,
+                        "isTimeSeriesData": true,
+                        "name": "CPU_TIME",
+                        "opDispatchedCount": false,
+                        "opL3MissOnly": false,
+                        "osMode": false,
+                        "samples": 0,
+                        "smcSource": 0,
+                        "threshold": 0,
+                        "traceMode": 0,
+                        "unit": "",
+                        "unitMask": 0,
+                        "usrMode": false
+                    }
+                ]
+            }
+        ],
+        "guest": false,
+        "guestKallsyms": "",
+        "guestKmodules": "",
+        "guestPid": 0,
+        "guestSymPaths": "",
+        "host": false,
+        "hypervisorEnabled": true,
+        "hypervisorVendor": "Microsoft Hyper-V",
+        "ibsIdentifiers": 0,
+        "ibsOpSampling": false,
+        "isCacheline": false,
+        "isFreqMode": false,
+        "issmtEnabled": true,
+        "onlineCores": 12,
+        "osName": "Win1125H2-64",
+        "p0Freq": 0,
+        "profScope": "Single Application",
+        "profiledPids": "18444;",
+        "totalPages": "52150 MB",
+        "totalRam": "49078 MB",
+        "totalVirtualMemory": "134217727 MB"
+    },
+    "categoriesCollected": [
+        "cpu"
+    ],
+    "collectCommand": "AMDuProfCLI.exe profile --config hotspots --detail -o ./profile_results c:\\Users\\jthec\\cen64-rs\\target\\debug\\cen64-rs.exe -- C:\\Users\\jthec\\Downloads\\pif\\pif.bin C:\\Users\\jthec\\Downloads\\tloz\\tloz.z64",
+    "collection": {
+        "branch-filter": 511,
+        "callstack": {
+            "callstackSize": 0,
+            "fpo": false,
+            "interval": 1,
+            "scope": 1,
+            "unwindDepth": 128
+        },
+        "customProfileEventMap": {
+            "keys": null,
+            "values": null
+        },
+        "dataBufferCount": 0,
+        "events": {
+            "configName": "Hotspots",
+            "configType": 4,
+            "cpuTraceSourceMask": 0,
+            "ibsEvents": {
+                "cacheAnalysis": false,
+                "fetch": false,
+                "fetchCallstack": true,
+                "fetchInterval": 0,
+                "fetchL3Miss": false,
+                "loadStoreOnly": false,
+                "op": false,
+                "opCallstack": true,
+                "opCycleCount": false,
+                "opInterval": 0,
+                "opL3Miss": false,
+                "opLoadLatency": 0,
+                "randomize": true
+            },
+            "pmcEvents": null,
+            "predefinedProfileType": 0,
+            "samplingModeMask": 1,
+            "timerCallstack": true,
+            "timerInterval": 10.0,
+            "timerSamplingMode": 1
+        },
+        "flags": {
+            "collectSysModules": false,
+            "cssDefaultValues": false,
+            "defaultBranchAnalysis": false,
+            "hasCallstack": false,
+            "isThreadConcurrency": false,
+            "maxDataFileSize": 0,
+            "perEventCSSDefault": false,
+            "profileMpi": false,
+            "profileSamplinModeBpf": false,
+            "pythonTraceOptions": false,
+            "traceMpi": false,
+            "traceMpiMode": 0,
+            "traceOpenmp": false,
+            "traceOpenmpMode": 0,
+            "traceOpenmpType": 0
+        },
+        "globalFrequency": 0,
+        "globalSamplingInterval": 0,
+        "hostP0Freqs": [
+            {
+                "host": "JORDAN-PC-WIN11",
+                "p0Freq": 3701.0
+            }
+        ],
+        "hotspotsProfilingSignal": -1,
+        "lbr": false,
+        "livePower": null,
+        "metadataSource": 0,
+        "mmapBuffer": 0,
+        "profileChildren": true,
+        "profileConfigFiles": [
+            "hotspots"
+        ],
+        "schedule": {
+            "categoryDurations": [
+                {
+                    "category": 1,
+                    "categoryName": "CPU PROFILE",
+                    "end": 151277056476700,
+                    "start": 151169850925600,
+                    "type": 0
+                }
+            ],
+            "elapsed": 107206,
+            "end": 151277056476700,
+            "endTs": "Mon Apr 13 18:11:31 2026",
+            "hostDurations": [
+                {
+                    "end": 151277056476700,
+                    "host": "JORDAN-PC-WIN11",
+                    "start": 151169850925600
+                }
+            ],
+            "profileCollectionDataLimitType": 0,
+            "profileDuration": 0,
+            "start": 151169850925600,
+            "startDelay": 0,
+            "startTs": "Mon Apr 13 18:09:44 2026",
+            "type": 2
+        },
+        "sessionVersion": 9,
+        "target": {
+            "appArgs": "-- C:\\Users\\jthec\\Downloads\\pif\\pif.bin C:\\Users\\jthec\\Downloads\\tloz\\tloz.z64 ",
+            "coreAffinity": "FFF",
+            "coreMask": "FFF",
+            "gpuCollectAgentVersion": 0,
+            "gpuFamily": "",
+            "gpuRocprofVersion": 0,
+            "launchApp": "c:\\Users\\jthec\\cen64-rs\\target\\debug\\cen64-rs.exe",
+            "profileCores": false,
+            "systemWide": false,
+            "terminateApp": false,
+            "workingDir": "C:\\Users\\jthec\\cen64-rs"
+        }
+    },
+    "deviceInfo": {
+        "keys": [
+            0
+        ],
+        "values": [
+            {
+                "keys": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11
+                ],
+                "values": [
+                    [
+                        0,
+                        3701000000
+                    ],
+                    [
+                        0,
+                        3701000000
+                    ],
+                    [
+                        0,
+                        3701000000
+                    ],
+                    [
+                        0,
+                        3701000000
+                    ],
+                    [
+                        0,
+                        3701000000
+                    ],
+                    [
+                        0,
+                        3701000000
+                    ],
+                    [
+                        0,
+                        3701000000
+                    ],
+                    [
+                        0,
+                        3701000000
+                    ],
+                    [
+                        0,
+                        3701000000
+                    ],
+                    [
+                        0,
+                        3701000000
+                    ],
+                    [
+                        0,
+                        3701000000
+                    ],
+                    [
+                        0,
+                        3701000000
+                    ]
+                ]
+            }
+        ]
+    },
+    "generatedDBs": [
+        {
+            "category": 8192,
+            "categoryName": "callstack",
+            "databaseName": "callstack"
+        },
+        {
+            "category": 1,
+            "categoryName": "cpu",
+            "databaseName": "cpu"
+        }
+    ],
+    "hpc": {
+        "hostName": "JORDAN-PC-WIN11"
+    },
+    "profileType": 1,
+    "reportCommand": "",
+    "translateCommand": "",
+    "translation": [
+        {
+            "aggregateCoreLevel": false,
+            "aggregateInst": true,
+            "aggregateInterval": 1,
+            "asciiFlags": 0,
+            "cachePath": "",
+            "category": 1,
+            "categoryNames": "CPU PROFILE",
+            "dataCoarsenessLevel": 1,
+            "debugSymbolsPath": "",
+            "hostName": "",
+            "mpiInputDir": "C:\\Users\\jthec\\cen64-rs\\profile_results\\AMDuProf-cen64-rs-Hotspots_Apr-13-2026_18-09-43\\cpu",
+            "processInlineFunctions": false,
+            "showPyIntrepFrames": false,
+            "summaryTimelineSz": 5000,
+            "symbolServerDirs": "",
+            "useLegacySymbolDowloader": false
+        }
+    ]
+}

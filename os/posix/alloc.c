@@ -20,8 +20,12 @@
 // Global file descriptor for allocations.
 static int zero_page_fd = -1;
 
+
+// extern void *cen64_alloc(struct cen64_mem *m, size_t size, bool exec);
+
 // Allocates a block of (R/W/X) memory.
-void *cen64_alloc(struct cen64_mem *m, size_t size, bool exec) {
+// moved into rust
+void *cen64_alloc_original(struct cen64_mem *m, size_t size, bool exec) {
   int flags = MAP_PRIVATE;
   int perm = PROT_READ | PROT_WRITE;
 

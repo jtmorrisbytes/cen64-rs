@@ -9,3 +9,23 @@ vcvars = "0.1.6"
 
 [target."cfg(windows)".build-dependencies]
 vcvars = "0.1.6"
+
+[target."cfg(windows)".dependencies]
+windows = { version = "0.61.2", features = ["Win32_System_Diagnostics_Debug", "Win32_Foundation","Win32_System_Kernel","Win32_System_Memory"] }
+windows-sys = { version = "0.61.2", features = ["Win32_System_Diagnostics_Debug", "Win32_Foundation","Win32_System_Kernel","Win32_System_Memory"] }
+
+[profile.dev]
+lto="thin"
+debug=true
+strip=false
+
+[profile.release]
+debug = true    # Required for function names in the profiler
+strip = false   # Ensures symbols aren't removed
+
+[dependencies]
+clap = { version = "4.6.0", features = ["derive"] }
+env_logger = "0.11.10"
+libc = "0.2.184"
+log = "0.4.29"
+openal-sys = { version = "1.16.0", features = [] }

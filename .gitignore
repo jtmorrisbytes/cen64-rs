@@ -14,7 +14,7 @@
 /debugger/moc*_*.cpp
 /debugger/*.pro.user*
 /debugger/Makefile
-
+/target/
 /debugger/ui_main_window.h
 
 # Compiled source/binaries #
